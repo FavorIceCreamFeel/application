@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: dev
+#文件上传与下载
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    suffix: .html
+#分页助手
+pagehelper:
+  helper-dialect: mysql
+  reasonable: ture
+  support-methods-arguments: true
+  params: count=countSql
+logging:
+  config:
+    classpath: logback-spring.xml

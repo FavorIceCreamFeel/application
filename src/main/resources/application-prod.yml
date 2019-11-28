@@ -1,0 +1,16 @@
+#prod(正式)环境配置
+spring:
+  datasource:
+    hikari:
+      username: root
+      password:
+      jdbc-url: jdbc:mysql://localhost:3306/security?useUnicode=true&characterEncoder=utf-8
+      driver-class-name: com.mysql.jdbc.Driver
+      auto-commit: true #自动提交使用后的连接
+      connection-timeout: 3000 #3秒后未获得连接即为超时
+      max-lifetime: 1800000 #30分钟生命周期
+      idle-timeout: 900000  #15分钟空闲生命周期
+      minimum-idle: 25 #池中最小空闲连接数
+      maximum-pool-size: 500 #池中最大连接数
+server:
+  port: 80

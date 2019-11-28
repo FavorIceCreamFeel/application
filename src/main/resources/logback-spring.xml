@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!-- 存放日志文件的目录         文件位置在项目文件log目录下 没有目录会自动创建-->
+    <property name="LOG_HOME" value="log"/>
+    <!--<property name="LOG_HOME" value="/log"/>//这样写是在c盘根目录下-->
+    <!-- 日志文件名的前缀 -->
+    <property name="PREFIX" value="application-log"/>
+    <!-- 日志文件名的后缀 -->
+    <property name="SUFFIX" value="log"/>
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />引入系统模板不需要会重复打印日志-->
+    <!-- 控制台输出日志 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 日志打印格式：可以使用 %color() 来设置打印对象的颜色，color的可选值有 blue cyan faint green magenta yellow red -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta(%-5level) ---- %green([%class:%line]) - %cyan(%msg%n)</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- dev 环境下，只在 console 中打印日志 -->
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <!-- prod 环境下  -->
+    <springProfile name="prod">
+        <!-- 文件保存日志 -->
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/${PREFIX}.${SUFFIX}</file>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%level] [%class:%line] - %msg%n</pattern>
+            </encoder>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <!-- 基于时间和文件大小的日志滚动策略 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_HOME}/${PREFIX}.%d{yyyyMMdd}.%i.${SUFFIX}</fileNamePattern>
+                <!-- 日志保留30天 -->
+                <maxHistory>30</maxHistory>
+                <!-- 日志文件达到10M就滚动 -->
+                <maxFileSize>10MB</maxFileSize>
+            </rollingPolicy>
+        </appender>
+
+        <!-- 既要在 console 中打印日志，也要将日志保存到文件中 -->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>
