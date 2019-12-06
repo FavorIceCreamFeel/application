@@ -22,3 +22,9 @@ pagehelper:
 logging:
   config:
     classpath: logback-spring.xml
+#配置短信验证信息
+phoneCode:
+  businessId: 165354
+  secretId: 156432
+  secretKey: 153431
+  API_URl: 15643

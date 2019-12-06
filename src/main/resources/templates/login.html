@@ -151,11 +151,11 @@
       $.ajax({
         type:"post",
         url:"http://localhost:8080/zero/addUser",
-        data:{"phone":this.phone,"number":this.number},
+        data:{"phone":this.phone,"number":this.number,"signUp":"signUp"},
         dataType:"json",
         success:function (data) {
           if (data===false){
-            alert("注册失败请检查后在次注册！");
+            alert("注册失败请检查后再次注册！");
             return;
           }
           if (data===true){

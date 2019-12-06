@@ -103,4 +103,14 @@ public class UserServerImpl implements UserServer {
             logger.info("查询用户失败!无此用户");
         return user;
     }
+
+    /**
+     * 添加一个用户
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean addUser(User user) {
+        return false;
+    }
 }

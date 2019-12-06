@@ -12,4 +12,5 @@ public interface UserServer extends UserDetailsService {
     public boolean insertUser(User user);
     public boolean updateUser(User user);
     public User selectUserByPhoneNumber(int phoneNumber);
+    public boolean addUser(User user);
 }
