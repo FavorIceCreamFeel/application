@@ -19,12 +19,13 @@ pagehelper:
   reasonable: ture
   support-methods-arguments: true
   params: count=countSql
-logging:
-  config:
-    classpath: logback-spring.xml
+#logging:
+#  config:
+#    classpath: logback-spring.xml
 #配置短信验证信息
-phoneCode:
+phonecode:
   businessId: 165354
   secretId: 156432
   secretKey: 153431
-  API_URl: 15643
+  API_URl: https://sms.dun.163yun.com/v2/sendsms
+  templateId: 1000

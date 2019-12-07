@@ -4,8 +4,6 @@ spring:
     hikari:
       username: root
       password: 150938
-#      jdbc-url: jdbc:mysql://localhost:3306/webapp?useUnicode=true&characterEncoder=utf-8
-#      driver-class-name: com.mysql.jdbc.Driver
       auto-commit: true #自动提交使用后的连接
       connection-timeout: 3000 #3秒后未获得连接即为超时
       max-lifetime: 1800000 #30分钟生命周期
