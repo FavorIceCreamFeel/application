@@ -33,12 +33,25 @@ public class applicationUtils {
     @Autowired
     private PhoneCode phoneCode;
     /**
+     * 获取指定长度的随机字符串
+     */
+    public static String getRandomString(int length){
+        String str="0123456789";
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i=0; i<length;i++) {
+            int i1 = random.nextInt(str.length());
+            stringBuilder.append(str.charAt(i1));
+        }
+        return stringBuilder.toString();
+    }
+    /**
      * 生成签名信息
      * @param secretKey 产品私钥
      * @param params 接口请求参数名和参数值map，不包括signature参数名
      * @return
      */
-    public  String genSignature(String secretKey, Map<String, String> params){
+    private String genSignature(String secretKey, Map<String, String> params){
         // 1. 参数名按照ASCII码表升序排序
         String[] keys = params.keySet().toArray(new String[0]);
         Arrays.sort(keys);
@@ -64,8 +77,8 @@ public class applicationUtils {
      * @param connectionRequestTimeout
      * @return
      */
-    public  HttpClient createHttpClient(int maxTotal, int maxPerRoute, int socketTimeout, int connectTimeout,
-                                              int connectionRequestTimeout) {
+    private HttpClient createHttpClient(int maxTotal, int maxPerRoute, int socketTimeout, int connectTimeout,
+                                        int connectionRequestTimeout) {
         RequestConfig defaultRequestConfig = RequestConfig.custom().setSocketTimeout(socketTimeout)
                 .setConnectTimeout(connectTimeout).setConnectionRequestTimeout(connectionRequestTimeout).build();
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
@@ -83,7 +96,7 @@ public class applicationUtils {
      * @param encoding   编码
      * @return
      */
-    public  String sendPost(String url, Map<String, String> params, Charset encoding) {
+    private String sendPost(String url, Map<String, String> params, Charset encoding) {
         String resp = "";
         HttpPost httpPost = new HttpPost(url);
         if (params != null && params.size() > 0) {
@@ -123,18 +136,17 @@ public class applicationUtils {
     public String sendPostPhoneNum(String phone){
     // 模板参数对应的json格式数据,例如模板为您的验证码为${p1},请于${p2}时间登陆到我们的服务器
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("p1", "123");
-    jsonObject.put("p2", "20180816");
+    jsonObject.put("p1", getRandomString(6));
+    jsonObject.put("p2", "60秒");
     String params = jsonObject.toJSONString();
-        Map<String, String> datas = null;
+        Map<String, String> data = null;
         try {
-            datas = buildParam(phone, params);
+            data = buildParam(phone, params);
         } catch (IOException e) {
             e.printStackTrace();
         }
         //发送请求
-        String result = sendPost(phoneCode.getAPI_URl(), datas, Consts.UTF_8);
-    return result;
+        return sendPost(phoneCode.getAPI_URl(), data, Consts.UTF_8);
 }
     /**
      * 环境参数
@@ -143,18 +155,18 @@ public class applicationUtils {
      * @return
      * @throws IOException
      */
-    public  Map<String, String> buildParam(String mobile, String params) throws IOException {
-        Map map = new HashMap<String, String>();
+    private Map<String, String> buildParam(String mobile, String params) throws IOException {
+        Map<String, String> map = new HashMap<String, String>();
             map.put("businessId", phoneCode.getBusinessId());
-            map.put("timestamp", String.valueOf(System.currentTimeMillis()));
+            map.put("timestamp", String.valueOf(System.currentTimeMillis()));//时间戳
             map.put("version", "v2");//请求版本
             map.put("templateId",phoneCode.getTemplateId());// 此处用申请通过的模板id
             map.put("mobile", mobile);//手机号
             map.put("paramType", "json");//参数类型
-            map.put("params", params);//验证码和时间戳
+            map.put("params", params);//验证码参数
             map.put("nonce", UUID.randomUUID().toString().replace("-", ""));
             map.put("secretId",phoneCode.getSecretId());//添加产品密钥ID
-        String sign = genSignature(phoneCode.getSecretKey(), map);
+        String sign = genSignature(phoneCode.getSecretKey(), map);//生成签名信息
             map.put("signature", sign);
             return map;
       }
