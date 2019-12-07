@@ -26,7 +26,7 @@ public class ZeroController {
     private PhoneCode phoneCode;
     @RequestMapping("/index")
     public String indexPage(){
-        return "index";
+        return "404";
     }
     @RequestMapping("/signUp")
     public String signUpPage(Model model,String signUp){

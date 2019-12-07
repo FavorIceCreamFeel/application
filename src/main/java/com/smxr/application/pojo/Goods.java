@@ -12,18 +12,20 @@ public class Goods {
     private int goodsNum;//商品数量
     private String goodsMoney;//商品价格
     private String goodsDescription;//商品描述
+    private String goodsTypeId;//商品类型
     private String goods;//商品
     private int goodsStatus;//商品状态
 
     public Goods() {
     }
 
-    public Goods(int goodsId, String goodsName, int goodsNum, String goodsMoney, String goodsDescription, String goods, int goodsStatus) {
+    public Goods(int goodsId, String goodsName, int goodsNum, String goodsMoney, String goodsDescription, String goodsTypeId, String goods, int goodsStatus) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.goodsNum = goodsNum;
         this.goodsMoney = goodsMoney;
         this.goodsDescription = goodsDescription;
+        this.goodsTypeId = goodsTypeId;
         this.goods = goods;
         this.goodsStatus = goodsStatus;
     }
@@ -82,5 +84,27 @@ public class Goods {
 
     public void setGoodsStatus(int goodsStatus) {
         this.goodsStatus = goodsStatus;
+    }
+
+    public String getGoodsTypeId() {
+        return goodsTypeId;
+    }
+
+    public void setGoodsTypeId(String goodsTypeId) {
+        this.goodsTypeId = goodsTypeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "goodsId=" + goodsId +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsNum=" + goodsNum +
+                ", goodsMoney='" + goodsMoney + '\'' +
+                ", goodsDescription='" + goodsDescription + '\'' +
+                ", goodsTypeId='" + goodsTypeId + '\'' +
+                ", goods='" + goods + '\'' +
+                ", goodsStatus=" + goodsStatus +
+                '}';
     }
 }
