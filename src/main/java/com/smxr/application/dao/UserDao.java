@@ -25,4 +25,7 @@ public interface UserDao {
     public boolean updateUser(User user);
     public User selectUserByPhoneNumber(int phoneNumber);
 
+
+    //用户人数查询
+
 }

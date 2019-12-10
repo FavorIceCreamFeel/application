@@ -6,7 +6,7 @@ package com.smxr.application.pojo;
  * @time 1:24
  * 订单表
  */
-public class Order {
+public class Orders {
     private int orderId;//订单id
     private int goodsId;//订单商品id
     private String goodsMoney;//订单商品价格
@@ -14,10 +14,10 @@ public class Order {
     private String orderTime;//订单创建时间
     private int orderStatus;//订单状态（0未支付，1申请支付中，2已经支付）
 
-    public Order() {
+    public Orders() {
     }
 
-    public Order(int orderId, int goodsId, String goodsMoney, int goodsNum, String orderTime, int orderStatus) {
+    public Orders(int orderId, int goodsId, String goodsMoney, int goodsNum, String orderTime, int orderStatus) {
         this.orderId = orderId;
         this.goodsId = goodsId;
         this.goodsMoney = goodsMoney;

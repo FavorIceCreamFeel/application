@@ -12,14 +12,15 @@ public class Goods {
     private int goodsNum;//商品数量
     private String goodsMoney;//商品价格
     private String goodsDescription;//商品描述
-    private String goodsTypeId;//商品类型
+    private String goodsTypeId;//商品类型ID
     private String goods;//商品
+    private String goodsUrl;//商品图片存储路径
     private int goodsStatus;//商品状态
 
     public Goods() {
     }
 
-    public Goods(int goodsId, String goodsName, int goodsNum, String goodsMoney, String goodsDescription, String goodsTypeId, String goods, int goodsStatus) {
+    public Goods(int goodsId, String goodsName, int goodsNum, String goodsMoney, String goodsDescription, String goodsTypeId, String goods, String goodsUrl, int goodsStatus) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.goodsNum = goodsNum;
@@ -27,7 +28,16 @@ public class Goods {
         this.goodsDescription = goodsDescription;
         this.goodsTypeId = goodsTypeId;
         this.goods = goods;
+        this.goodsUrl = goodsUrl;
         this.goodsStatus = goodsStatus;
+    }
+
+    public String getGoodsUrl() {
+        return goodsUrl;
+    }
+
+    public void setGoodsUrl(String goodsUrl) {
+        this.goodsUrl = goodsUrl;
     }
 
     public int getGoodsId() {
