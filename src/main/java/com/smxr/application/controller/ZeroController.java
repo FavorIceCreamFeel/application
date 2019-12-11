@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 
+import static javafx.scene.input.KeyCode.L;
+
 /**
  * @author smxr
  * @date 2019/11/25
@@ -34,7 +36,6 @@ public class ZeroController {
             return "404";
         model.addAttribute("signUp", signUp);
         model.addAttribute("addUser", 1);
-        System.out.println(signUp);
         return "login";
     }
     @RequestMapping("/login")
@@ -61,7 +62,9 @@ public class ZeroController {
 //    if (signUp.equals("null")||signUp.equals("")){return false;}
 //    if (phone.equals("null")||phone.equals("")){return false;}
 //    if (number.equals("null")||number.equals("")){return false;}
-        boolean b = userServer.addUser(new User("root", "123456", "男", 0,Integer.parseInt(phone), "", ""));
+        User user = new User("root", number, "男", 0,phone, "", "");
+        System.out.println(user.toString());
+        boolean b = userServer.insertUser(user);
         System.out.println(b);
         return b+"";
     }

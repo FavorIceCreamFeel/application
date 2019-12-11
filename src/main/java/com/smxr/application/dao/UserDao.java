@@ -16,18 +16,17 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserDao {
-    @Select("select *from user where phoneNum=#{param}")
-    public User queryUserByPhoneNum(int phoneNum);
+    @Select("select *from user where phoneNumber=#{param}")
+    public User queryUserByPhoneNum(String phoneNum);
     @Select("select  powerSign from power where" +
             " powerId in (select distinct powerId from role_power where" +
             " roleId in (select roleId from user_role where userId=#{param1}))")
-    public List queryPowerStringByPhoneNum(int phoneNum);
+    public List queryPowerStringByPhoneNum(String phoneNum);
     @Insert("insert into user values(#{userName},#{userPwd},#{userSex},#{userAge},#{phoneNumber},#{address},#{createTime})")
     public boolean insertUser(User user);
     public boolean updateUser(User user);
-    public User selectUserByPhoneNumber(int phoneNumber);
-
-
     //用户人数查询
+    @Select("select count(1) from user where phoneNumber=#{param}")
+    public int selectUserByPhoneNumber(String phoneNumber);
 
 }

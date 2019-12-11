@@ -37,7 +37,7 @@ public class UserServerImpl implements UserServer {
         logger.info("用户账号："+s);
         if (s==null) return null;
         if (s.equals("")) return null;
-        User user = userDao.queryUserByPhoneNum(Integer.parseInt(s));
+        User user = userDao.queryUserByPhoneNum(s);
         logger.info("用户账号："+user);
         if (user==null) return null;
         StringBuilder stringBuilder = new StringBuilder();
@@ -62,7 +62,8 @@ public class UserServerImpl implements UserServer {
     @Override
     public boolean insertUser(User user) {
         logger.info("开始添加用户："+user);
-        if (user==null) return false;
+        User user1 = userDao.queryUserByPhoneNum(user.getPhoneNumber());
+        if (user1!=null){return false;}
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         boolean boo = userDao.insertUser(user);
         if (boo)
@@ -90,28 +91,14 @@ public class UserServerImpl implements UserServer {
     }
 
     /**
-     * 查询userByPhoneNumber
+     * 查询用户数量userByPhoneNumber
      * @param phoneNumber
      * @return
      */
     @Override
-    public User selectUserByPhoneNumber(int phoneNumber) {
+    public int selectUserByPhoneNumber(String phoneNumber) {
         logger.info("开始查询用户："+phoneNumber);
-        User user = userDao.selectUserByPhoneNumber(phoneNumber);
-        if (user!=null)
-            logger.info("查询用户成功："+user);
-        else
-            logger.info("查询用户失败!无此用户");
-        return user;
+        return userDao.selectUserByPhoneNumber(phoneNumber);
     }
 
-    /**
-     * 添加一个用户
-     * @param user
-     * @return
-     */
-    @Override
-    public boolean addUser(User user) {
-        return false;
-    }
 }

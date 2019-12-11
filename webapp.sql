@@ -2,21 +2,21 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50550
+Source Server Version : 50728
 Source Host           : localhost:3306
 Source Database       : webapp
 
 Target Server Type    : MYSQL
-Target Server Version : 50550
+Target Server Version : 50728
 File Encoding         : 65001
 
-Date: 2019-12-10 17:46:46
+Date: 2019-12-11 20:02:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for goods
+-- Table structure for `goods`
 -- ----------------------------
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
@@ -36,7 +36,7 @@ CREATE TABLE `goods` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for goodstype
+-- Table structure for `goodstype`
 -- ----------------------------
 DROP TABLE IF EXISTS `goodstype`;
 CREATE TABLE `goodstype` (
@@ -51,10 +51,10 @@ CREATE TABLE `goodstype` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for `orders`
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
   `orderId` int(11) NOT NULL COMMENT '订单号',
   `goodsId` int(11) NOT NULL COMMENT '订单商品id',
   `goodsMoney` varchar(50) NOT NULL COMMENT '订单价格',
@@ -65,11 +65,11 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of order
+-- Records of orders
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for power
+-- Table structure for `power`
 -- ----------------------------
 DROP TABLE IF EXISTS `power`;
 CREATE TABLE `power` (
@@ -85,7 +85,7 @@ CREATE TABLE `power` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for role
+-- Table structure for `role`
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
@@ -101,7 +101,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for role_power
+-- Table structure for `role_power`
 -- ----------------------------
 DROP TABLE IF EXISTS `role_power`;
 CREATE TABLE `role_power` (
@@ -114,7 +114,7 @@ CREATE TABLE `role_power` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for `user`
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -122,7 +122,7 @@ CREATE TABLE `user` (
   `userPwd` varchar(255) DEFAULT NULL,
   `userSex` varchar(2) DEFAULT NULL COMMENT '用户性别',
   `userAge` int(11) unsigned DEFAULT '0' COMMENT '用户年龄',
-  `phoneNumber` int(11) NOT NULL COMMENT '联系方式（用作用户唯一id）主键,登陆时用的账户',
+  `phoneNumber` varchar(50) NOT NULL COMMENT '联系方式（用作用户唯一id）主键,登陆时用的账户',
   `address` varchar(50) DEFAULT NULL COMMENT '用户地址',
   `createTime` varchar(50) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`phoneNumber`)
@@ -131,9 +131,10 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('root', '$2a$10$TL7WlIlajXjOP/dCnydUbuGX9bOUIlKoyqVD/v1qRjntIhk.Hc2SK', '?', '0', '17513234581', 'root', '');
 
 -- ----------------------------
--- Table structure for userid_roleid
+-- Table structure for `userid_roleid`
 -- ----------------------------
 DROP TABLE IF EXISTS `userid_roleid`;
 CREATE TABLE `userid_roleid` (

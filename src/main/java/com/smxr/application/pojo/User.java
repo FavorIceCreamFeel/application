@@ -13,14 +13,14 @@ public class User {
     private String userPwd;//密码
     private String userSex;//性别
     private int userAge;//年龄
-    private int phoneNumber;//用户手机号主键
+    private String phoneNumber;//用户手机号主键
     private String address;//用户地址
     private String createTime;//用户创建时间
 
     public User() {
     }
 
-    public User(String userName, String userPwd, String userSex, int userAge, int phoneNumber, String address, String createTime) {
+    public User(String userName, String userPwd, String userSex, int userAge, String phoneNumber, String address, String createTime) {
         this.userName = userName;
         this.userPwd = userPwd;
         this.userSex = userSex;
@@ -62,11 +62,11 @@ public class User {
         this.userAge = userAge;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -93,12 +93,13 @@ public class User {
                 ", userPwd='" + userPwd + '\'' +
                 ", userSex='" + userSex + '\'' +
                 ", userAge=" + userAge +
-                ", phoneNumber=" + phoneNumber +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", createTime='" + createTime + '\'' +
                 '}';
     }
-//重写了用户手机号的equals和hashcode
+
+    //重写了用户手机号的equals和hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
