@@ -1,6 +1,7 @@
 package com.smxr.application.controller;
 
 import com.smxr.application.pojo.PhoneCode;
+import com.smxr.application.pojo.User;
 import com.smxr.application.service.UserServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import javax.swing.*;
  * @author smxr
  * @date 2019/11/25
  * @time 22:28
+ * 对外开放接口
  */
 @Controller
 @RequestMapping("/zero")
@@ -22,8 +24,6 @@ public class ZeroController {
     private static Logger logger=LoggerFactory.getLogger(ZeroController.class);
     @Autowired
     private UserServer userServer;
-    @Autowired
-    private PhoneCode phoneCode;
     @RequestMapping("/index")
     public String indexPage(){
         return "404";
@@ -33,6 +33,8 @@ public class ZeroController {
         if (signUp.equals(""))
             return "404";
         model.addAttribute("signUp", signUp);
+        model.addAttribute("addUser", 1);
+        System.out.println(signUp);
         return "login";
     }
     @RequestMapping("/login")
@@ -59,19 +61,9 @@ public class ZeroController {
 //    if (signUp.equals("null")||signUp.equals("")){return false;}
 //    if (phone.equals("null")||phone.equals("")){return false;}
 //    if (number.equals("null")||number.equals("")){return false;}
-    return phoneCode.toString();
+        boolean b = userServer.addUser(new User("root", "123456", "男", 0,Integer.parseInt(phone), "", ""));
+        System.out.println(b);
+        return b+"";
     }
 
-    /**
-     * 测试参数注入
-     * @return
-     */
-    @RequestMapping(value = "/addUser1")
-    @ResponseBody
-    public String addUser1(){
-//    if (signUp.equals("null")||signUp.equals("")){return false;}
-//    if (phone.equals("null")||phone.equals("")){return false;}
-//    if (number.equals("null")||number.equals("")){return false;}
-        return phoneCode.toString();
-    }
 }

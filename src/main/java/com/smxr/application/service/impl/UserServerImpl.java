@@ -63,6 +63,7 @@ public class UserServerImpl implements UserServer {
     public boolean insertUser(User user) {
         logger.info("开始添加用户："+user);
         if (user==null) return false;
+        user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         boolean boo = userDao.insertUser(user);
         if (boo)
             logger.info("添加用户成功："+user);

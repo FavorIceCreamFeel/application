@@ -1,6 +1,7 @@
 package com.smxr.application.dao;
 
 import com.smxr.application.pojo.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public interface UserDao {
             " powerId in (select distinct powerId from role_power where" +
             " roleId in (select roleId from user_role where userId=#{param1}))")
     public List queryPowerStringByPhoneNum(int phoneNum);
+    @Insert("insert into user values(#{userName},#{userPwd},#{userSex},#{userAge},#{phoneNumber},#{address},#{createTime})")
     public boolean insertUser(User user);
     public boolean updateUser(User user);
     public User selectUserByPhoneNumber(int phoneNumber);
