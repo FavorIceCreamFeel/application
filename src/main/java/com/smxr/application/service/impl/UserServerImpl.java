@@ -38,7 +38,7 @@ public class UserServerImpl implements UserServer {
         if (s==null) return null;
         if (s.equals("")) return null;
         User user = userDao.queryUserByPhoneNum(s);
-        logger.info("用户账号："+user);
+        logger.info("用户："+user);
         if (user==null) return null;
         StringBuilder stringBuilder = new StringBuilder();
         List powerStringList = userDao.queryPowerStringByPhoneNum(user.getPhoneNumber());
@@ -63,7 +63,10 @@ public class UserServerImpl implements UserServer {
     public boolean insertUser(User user) {
         logger.info("开始添加用户："+user);
         User user1 = userDao.queryUserByPhoneNum(user.getPhoneNumber());
-        if (user1!=null){return false;}
+        if (user1!=null){
+            logger.info("用户已存在！注册失败");
+            return false;
+        }
         user.setUserPwd(passwordEncoder.encode(user.getUserPwd()));
         boolean boo = userDao.insertUser(user);
         if (boo)

@@ -1,8 +1,10 @@
 package com.smxr.application.controller;
 
+import com.smxr.application.Application;
 import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
 import com.smxr.application.service.UserServer;
+import com.smxr.application.utils.applicationUtilsOne;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class ZeroController {
     private UserServer userServer;
     @RequestMapping("/index")
     public String indexPage(){
+
+
         return "404";
     }
     @RequestMapping("/signUp")
@@ -59,14 +63,17 @@ public class ZeroController {
     public String addUser(@RequestParam(required = true,value = "phone")String phone,
                           @RequestParam(required = true,value = "number")String number,
                           String signUp){
-//    if (signUp.equals("null")||signUp.equals("")){return false;}
-//    if (phone.equals("null")||phone.equals("")){return false;}
-//    if (number.equals("null")||number.equals("")){return false;}
-        User user = new User("root", number, "男", 0,phone, "", "");
-        System.out.println(user.toString());
-        boolean b = userServer.insertUser(user);
-        System.out.println(b);
-        return b+"";
+    if (signUp.equals("null")||signUp.equals("")){return "404";}
+    if (phone.equals("null")||phone.equals("")){return "404";}
+    if (number.equals("null")||number.equals("")){return "404";}
+    User user = new User();
+    user.setUserName(phone);
+    user.setUserPwd(number);
+    user.setPhoneNumber(phone);
+    user.setUserAge(0);
+    user.setCreateTime(applicationUtilsOne.getDateTime());
+    boolean b = userServer.insertUser(user);
+    if(b){return "login";}else {return "404";}
     }
 
 }
