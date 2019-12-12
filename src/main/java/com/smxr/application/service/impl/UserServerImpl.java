@@ -84,13 +84,19 @@ public class UserServerImpl implements UserServer {
     @Override
     public boolean updateUser(User user) {
         logger.info("开始修改用户："+user);
-        if (user==null)  return false;
+        if (user==null)
+            return false;
+        String userPwd = user.getUserPwd();
+        String encode = passwordEncoder.encode(userPwd);
+        user.setUserPwd(encode);
         boolean boo = userDao.updateUser(user);
-        if (boo)
-            logger.info("修改用户成功："+user);
-        else
+        if (boo) {
+            logger.info("修改用户成功：" + user);
+            return boo;
+        }else{
             logger.info("修改用户失败："+user);
-        return boo;
+            return boo;
+        }
     }
 
     /**
@@ -102,6 +108,31 @@ public class UserServerImpl implements UserServer {
     public boolean selectUserByPhoneNumber(String phoneNumber) {
         logger.info("开始查询用户："+phoneNumber);
         return userDao.queryUserByPhoneNum(phoneNumber) == null;
+    }
+
+    /**
+     * 旧密码校验
+     * @param userName
+     * @return
+     */
+    @Override
+    public String findUserPwd(String userName,String userPwd) {
+        if (userName == null)
+            return "用户名不能为空，请重试";
+        if(userPwd == null)
+            return "旧密码不能为空，请重试";
+        String pwd = userDao.findUserPwd(userName);
+        boolean matches = passwordEncoder.matches(userPwd, pwd);
+        if (!matches) {
+            logger.info("原始密码错误，请重试");
+            return "原始密码错误，请重试";
+        }
+        if (pwd == null) {
+            logger.info("用户" + userName + "密码查询失败，请重试");
+            return "用户密码查询失败，请重试";
+        }else {
+            return userPwd;
+        }
     }
 
 }

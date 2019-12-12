@@ -12,4 +12,5 @@ public interface UserServer extends UserDetailsService {
     public boolean insertUser(User user);
     public boolean updateUser(User user);
     public boolean selectUserByPhoneNumber(String phoneNumber);
+    public String findUserPwd(String userName,String userPwd);
 }

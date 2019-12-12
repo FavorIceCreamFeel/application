@@ -4,6 +4,7 @@ import com.smxr.application.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,7 +30,13 @@ public interface UserDao {
     public List queryPowerStringByPhoneNum(String phoneNum);
     @Insert("insert into user values(#{userName},#{userPwd},#{userSex},#{userAge},#{phoneNumber},#{address},#{createTime})")
     public boolean insertUser(User user);
+
+    //修改密码
+    @Update("update user set userPwd=#{userPwd} where userName=#{userName}")
     public boolean updateUser(User user);
+    //旧密码校验
+    @Select("select userPwd from user where userName=#{userName}")
+    public String findUserPwd(String userName);
     /**
      *用户人数查询
      */
