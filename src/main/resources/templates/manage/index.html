@@ -10,10 +10,13 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">	
 	<meta name="format-detection" content="telephone=no">	
 	<!-- load css -->
+	<link rel="stylesheet" type="text/css" href="../../static/common/layui/css/layui.css" media="all" th:href="@{/common/layui/css/layui.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/global.css" media="all"th:href="@{/common/global.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/css/adminstyle.css" media="all" th:href="@{/css/adminstyle.css}">
 	<link rel="stylesheet" type="text/css" href="../../static/common/layui/css/layui.css" media="all" th:href="@{../../static/common/layui/css/layui.css}">
 	<link rel="stylesheet" type="text/css" href="../../static/common/global.css" media="all" th:href="@{../../static/common/global.css}">
 	<link rel="stylesheet" type="text/css" href="../../static/css/adminstyle.css" media="all" th:href="@{../../static/css/adminstyle.css}">
-	
+
 </head>
 <body>
 <div class="layui-layout layui-layout-admin" id="layui_layout">
@@ -71,7 +74,7 @@
 					</li>
 					-->
 					<li class="layui-nav-item">
-						<a href="login.html" th:href="@{login.html}">
+						<a href="login.html" th:href="@{/zero/login}">
                         <i class="iconfont icon-exit"></i>
 						退出</a>
 					</li>
@@ -85,7 +88,7 @@
 		<!-- 左侧菜单 -->
 		<ul class="layui-nav layui-nav-tree">
 			<li class="layui-nav-item layui-this">
-				<a href="javascript:;" data-url="main.html">
+				<a href="javascript:;" data-url="main.html" >
 				    <i class="iconfont icon-home1" data-icon='icon-home1'></i>
 					<span>后台首页</span>
 				</a>
@@ -93,13 +96,13 @@
 			<!-- 个人信息 -->
 			<li class="layui-nav-item">
 				<a href="javascript:;">
-					<i class="iconfont icon-jiaoseguanli" ></i>
+					<i class="iconfont icon-jiaoseguanli"></i>
 					<span>我的面板</span>
 					<em class="layui-nav-more"></em>
 				</a>
 				<dl class="layui-nav-child">
                     <dd>
-                        <a href="javascript:;" data-url="personInfo.html">
+                        <a href="javascript:;" data-url="personInfo.html" th:href="@{/manage/personInfo.html}">
                             <i class="iconfont icon-geren1" data-icon='icon-geren1'></i>
                             <span>个人信息</span>
                         </a>
@@ -220,48 +223,48 @@
 					              <span>会员人员管理</span>
 					           </a>
                            </dd>
-						<dd>
-							<a href="javascript:;" data-url="tab.html">
-								<i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>
-								<span>权限管理</span>
-							</a>
-						</dd>
+<!--						<dd>-->
+<!--							<a href="javascript:;" data-url="tab.html">-->
+<!--								<i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>-->
+<!--								<span>权限管理</span>-->
+<!--							</a>-->
+<!--						</dd>-->
                     </dl>
 				</li>
-				<!-- <li class="layui-nav-item">
+				 <li class="layui-nav-item">
 					<a href="javascript:;">
 					   <i class="iconfont icon-shengchengbaogao" ></i>
-					   <span>网站维护</span>
+					   <span>商品管理</span>
 					   <em class="layui-nav-more"></em>
 					</a>
 					   <dl class="layui-nav-child">
                            <dd>
-                           	   <a href="javascript:;">
+                           	   <a href="javascript:;"data-url="shop.html" >
 					              <i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>
-					              <span>网站主题</span>
+					              <span>商品管理</span>
 					           </a>
                            </dd>
-                           <dd>
-					    		<a href="">
-					    		   <i class="iconfont icon-database" data-icon='icon-database'></i>
-					    		   <span>数据库管理</span>
-					    		</a>
-					    	</dd>
-					   	    <dd>
-					    		<a href="">
-					    		   <i class="iconfont icon-shengchengbaogao" data-icon='icon-shengchengbaogao'></i>
-					    		   <span>生成页面</span>
-					    		</a>
-					    	</dd>
-					    	<dd>
-					    		<a href="">
-					    		   <i class="iconfont icon-qingchuhuancun" data-icon='icon-qingchuhuancun'></i>
-					    		   <span>更新缓存</span>
-					    		</a>
-					    	</dd>
+<!--                           <dd>-->
+<!--					    		<a href="">-->
+<!--					    		   <i class="iconfont icon-database" data-icon='icon-database'></i>-->
+<!--					    		   <span>数据库管理</span>-->
+<!--					    		</a>-->
+<!--					    	</dd>-->
+<!--					   	    <dd>-->
+<!--					    		<a href="">-->
+<!--					    		   <i class="iconfont icon-shengchengbaogao" data-icon='icon-shengchengbaogao'></i>-->
+<!--					    		   <span>生成页面</span>-->
+<!--					    		</a>-->
+<!--					    	</dd>-->
+<!--					    	<dd>-->
+<!--					    		<a href="">-->
+<!--					    		   <i class="iconfont icon-qingchuhuancun" data-icon='icon-qingchuhuancun'></i>-->
+<!--					    		   <span>更新缓存</span>-->
+<!--					    		</a>-->
+<!--					    	</dd>-->
 					    	
 					   </dl>
-				</li> -->
+				</li>
 				
 				
 			<!-- 系统设置 -->
@@ -340,15 +343,15 @@
 			</ul>
 			<div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i class="larry-icon larry-right"></i></div> 
 			<ul class="layui-nav closeBox">
-				  <li class="layui-nav-item">
-				    <a href="javascript:;"><i class="iconfont icon-caozuo"></i> 页面操作</a>
-				    <dl class="layui-nav-child">
-					  <dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>
-				      <dd><a href="javascript:;" class="closePageOther"><i class="iconfont icon-prohibit"></i> 关闭其他</a></dd>
-				      <dd><a href="javascript:;" class="closePageAll"><i class="iconfont icon-guanbi"></i> 关闭全部</a></dd>
-				    </dl>
-				  </li>
-				</ul>
+<!--				  <li class="layui-nav-item">-->
+<!--				    <a href="javascript:;"><i class="iconfont icon-caozuo"></i> 页面操作</a>-->
+<!--				    <dl class="layui-nav-child">-->
+<!--					  <dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>-->
+<!--				      <dd><a href="javascript:;" class="closePageOther"><i class="iconfont icon-prohibit"></i> 关闭其他</a></dd>-->
+<!--				      <dd><a href="javascript:;" class="closePageAll"><i class="iconfont icon-guanbi"></i> 关闭全部</a></dd>-->
+<!--				    </dl>-->
+<!--				  </li>-->
+			</ul>
 			<div class="layui-tab-content" style="min-height: 150px; ">
 				<div class="layui-tab-item layui-show">
 					<iframe class="larry-iframe" data-id='0' src="main.html" ></iframe>
@@ -367,9 +370,9 @@
 <!--	</div>-->
 </div>
 <!-- 加载js文件-->                                                                                                                                                                                           
-	<script type="text/javascript" src="../../static/common/layui/layui.js" th:src=""></script>
-	<script type="text/javascript" src="../../static/js/larry.js"></script>
-	<script type="text/javascript" src="../../static/js/index.js"></script>
+	<script type="text/javascript" src="../../static/common/layui/layui.js" th:src="@{/common/layui/layui.js}"></script>
+	<script type="text/javascript" src="../../static/js/larry.js" th:src="@{/js/larry.js}"></script>
+	<script type="text/javascript" src="../../static/js/index.js" th:src="@{/js/index.js}"></script>
 
 
 
