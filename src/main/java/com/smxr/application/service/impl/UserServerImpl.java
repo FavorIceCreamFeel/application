@@ -94,14 +94,14 @@ public class UserServerImpl implements UserServer {
     }
 
     /**
-     * 查询用户数量userByPhoneNumber
+     * 查询用户是否存在
      * @param phoneNumber
      * @return
      */
     @Override
-    public int selectUserByPhoneNumber(String phoneNumber) {
+    public boolean selectUserByPhoneNumber(String phoneNumber) {
         logger.info("开始查询用户："+phoneNumber);
-        return userDao.selectUserByPhoneNumber(phoneNumber);
+        return userDao.queryUserByPhoneNum(phoneNumber) == null;
     }
 
 }

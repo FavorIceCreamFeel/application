@@ -4,6 +4,7 @@ import com.smxr.application.Application;
 import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
 import com.smxr.application.service.UserServer;
+import com.smxr.application.utils.applicationUtils;
 import com.smxr.application.utils.applicationUtilsOne;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class ZeroController {
     }
 
     /**
-     * 手机号注册
+     * 手机号注册接口
      * @param phone
      * @param number
      * @param signUp
@@ -74,6 +75,23 @@ public class ZeroController {
     user.setCreateTime(applicationUtilsOne.getDateTime());
     boolean b = userServer.insertUser(user);
     if(b){return "login";}else {return "404";}
+    }
+
+    /**
+     * 发送短信验证码接口
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/phoneCode",method = RequestMethod.POST)
+    @ResponseBody
+    public boolean sendPhoneCode(@RequestParam(value = "phone") String phone){
+        if (phone.equals("null")||phone.equals("")){return false;}
+        if (userServer.selectUserByPhoneNumber(phone)){
+//            applicationUtils applicationUtils = new applicationUtils();
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

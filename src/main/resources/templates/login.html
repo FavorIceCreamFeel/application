@@ -83,55 +83,57 @@
 </div>
 <script type="text/javascript" src="../static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script type="text/javascript">
-  // layui.config({
-  //   base: '../static/static/js/util' //你存放新模块的目录，注意，不是layui的模块目录
-  // }).use(['jquery','form'],function(){
-  //   var $ = layui.$,form = layui.form;
-  //
-  //
-  //   $("#find").click(function() {
-  //     if(!/^1\d{10}$/.test($("#phone").val())){
-  //       layer.msg("请输入正确的手机号");
-  //       return false;
-  //     }
-  //     var obj=this;
-  //     $.ajax({
-  //       type:"get",
-  //       url:"../static/json/login.json",
-  //       dataType:"json",//返回的
-  //       success:function(data) {
-  //         if(data.result){
-  //           $("#find").addClass(" layui-btn-disabled");
-  //           $('#find').attr('disabled',"true");
-  //           settime(obj);
-  //           $("#msg").text(data.msg);
-  //         }else{
-  //           layer.msg(data.msg);
-  //         }
-  //       },
-  //       error:function(msg) {
-  //         console.log(msg);
-  //       }
-  //     });
-  //   })
-  //   var countdown=60;
-  //   function settime(obj) {
-  //     if (countdown == 0) {
-  //       obj.removeAttribute("disabled");
-  //       obj.classList.remove("layui-btn-disabled")
-  //       obj.value="获取验证码";
-  //       countdown = 60;
-  //       return;
-  //     } else {
-  //
-  //       obj.value="重新发送(" + countdown + ")";
-  //       countdown--;
-  //     }
-  //     setTimeout(function() {
-  //               settime(obj) }
-  //             ,1000)
-  //   }
-  // });
+  layui.config({
+    base: '../static/static/js/util' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['jquery','form'],function(){
+    var $ = layui.$,form = layui.form;
+    $("#find").click(function() {
+      if(!/^1\d{10}$/.test($("#phone").val())){
+        layer.msg("请输入正确的手机号");
+        return false;
+      }
+      var phoneNum = $("input[name='username']").val();
+      // "status":0,
+      // "result":"logo"
+      var obj=this;
+      $.ajax({
+        type:"post",
+        url:"http://localhost:8080/zero/phoneCode",
+        data:{"phone":phoneNum},
+        dataType:"json",//返回的
+        success:function(data) {
+          if(data===true){
+            $("#find").addClass(" layui-btn-disabled");
+            $('#find').attr('disabled',"true");
+            settime(obj);
+            $("#msg").text(data.msg);
+          }else{
+            layer.msg("已注册！");
+          }
+        },
+        error:function(msg) {
+          console.log(msg);
+        }
+      });
+    });
+    var countdown=60;
+    function settime(obj) {
+      if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.classList.remove("layui-btn-disabled");
+        obj.value="获取验证码";
+        countdown = 60;
+        return;
+      } else {
+
+        obj.value="重新发送(" + countdown + ")";
+        countdown--;
+      }
+      setTimeout(function() {
+                settime(obj) }
+              ,1000)
+    }
+  });
   /**
    * 注册使用函数ok
    * @param addUser

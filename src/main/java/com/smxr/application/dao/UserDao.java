@@ -16,6 +16,11 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserDao {
+    /**
+     * 查询用户byPhoneNum
+     * @param phoneNum
+     * @return
+     */
     @Select("select *from user where phoneNumber=#{param}")
     public User queryUserByPhoneNum(String phoneNum);
     @Select("select  powerSign from power where" +
@@ -25,7 +30,9 @@ public interface UserDao {
     @Insert("insert into user values(#{userName},#{userPwd},#{userSex},#{userAge},#{phoneNumber},#{address},#{createTime})")
     public boolean insertUser(User user);
     public boolean updateUser(User user);
-    //用户人数查询
+    /**
+     *用户人数查询
+     */
     @Select("select count(1) from user where phoneNumber=#{param}")
     public int selectUserByPhoneNumber(String phoneNumber);
 
