@@ -20,7 +20,7 @@ public interface UserDao {
     public User queryUserByPhoneNum(String phoneNum);
     @Select("select  powerSign from power where" +
             " powerId in (select distinct powerId from role_power where" +
-            " roleId in (select roleId from user_role where userId=#{param1}))")
+            " roleId in (select roleId from userid_roleid where userId=#{param1}))")
     public List queryPowerStringByPhoneNum(String phoneNum);
     @Insert("insert into user values(#{userName},#{userPwd},#{userSex},#{userAge},#{phoneNumber},#{address},#{createTime})")
     public boolean insertUser(User user);

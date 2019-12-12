@@ -20,7 +20,7 @@
             <div class="layui-inline iphone">
               <div class="layui-input-inline">
                 <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
-                <input type="tel" name="phone" id="phone" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                <input type="tel" name="username" id="phone" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
               </div>
             </div>
               <!--注册时重新加载---显示-->
@@ -141,7 +141,7 @@
       window.location.href="http://localhost:8080/zero/signUp?signUp=signUp";
     }
     if (addUser===1){
-      var phone = $("input[name='phone']").val();
+      var phone = $("input[name='username']").val();
       var number = $("input[name='pnum']").val();
       var re = new RegExp(/^[a-zA-Z0-9]{6,8}$/);   // ^表示开始  $表示结束
       if (!/^1\d{10}$/.test(phone)){
