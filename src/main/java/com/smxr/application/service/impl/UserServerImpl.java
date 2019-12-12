@@ -122,15 +122,16 @@ public class UserServerImpl implements UserServer {
         if(userPwd == null)
             return "旧密码不能为空，请重试";
         String pwd = userDao.findUserPwd(userName);
-        boolean matches = passwordEncoder.matches(userPwd, pwd);
-        if (!matches) {
-            logger.info("原始密码错误，请重试");
-            return "原始密码错误，请重试";
-        }
+
         if (pwd == null) {
             logger.info("用户" + userName + "密码查询失败，请重试");
             return "用户密码查询失败，请重试";
         }else {
+            boolean matches = passwordEncoder.matches(userPwd, pwd);
+            if (!matches) {
+                logger.info("原始密码错误，请重试");
+                return "原始密码错误，请重试";
+            }
             return userPwd;
         }
     }
