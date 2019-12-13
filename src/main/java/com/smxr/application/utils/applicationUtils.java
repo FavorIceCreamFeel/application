@@ -16,6 +16,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.io.IOException;
@@ -29,9 +31,11 @@ import java.util.*;
  * @time 23:02
  * 工具类
  */
+@Component
 public class applicationUtils {
     @Autowired
     private PhoneCode phoneCode;
+    private static Map<String,Long> map=new HashMap<>();
     /**
      * 获取指定长度的随机字符串
      */
@@ -170,4 +174,15 @@ public class applicationUtils {
             map.put("signature", sign);
             return map;
       }
+    @Scheduled(cron = "0 0 12 * * ? ")
+    private void smxr(){
+        if (map.size()!=0){
+            for (Map.Entry<String, Long> entry : map.entrySet()) {
+                long currentTimeMillis = System.currentTimeMillis();
+                if(currentTimeMillis-entry.getValue()>=60000){
+                    map.remove(entry.getKey());
+                }
+            }
+        }
+    }
 }
