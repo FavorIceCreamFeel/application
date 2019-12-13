@@ -24,8 +24,8 @@ pagehelper:
 #    classpath: logback-spring.xml
 #配置短信验证信息
 phonecode:
-  businessId: 165354
-  secretId: 156432
-  secretKey: 153431
-  API_URl: https://sms.dun.163yun.com/v2/sendsms
-  templateId: 1000
+  AppID: 8a216da86cdb6950016d0458108b1cc1
+  account_SID: 8a216da86cdb6950016d0458103b1cba
+  auth_token: b38c7d477ea643a7a1f2643926f79482
+  API_URl: https://app.cloopen.com:8883
+  TemplateId: 1
