@@ -1,5 +1,7 @@
 package com.smxr.application.pojo;
 
+import java.math.BigDecimal;
+
 /**
  * @author smxr
  * @date 2019/11/24
@@ -10,7 +12,7 @@ public class Goods {
     private int goodsId;//商品id、编码
     private String goodsName;//商品名字
     private int goodsNum;//商品数量
-    private String goodsMoney;//商品价格
+    private BigDecimal goodsMoney;//商品价格
     private String goodsDescription;//商品描述
     private String goodsTypeId;//商品类型ID
     private String goods;//商品
@@ -20,7 +22,7 @@ public class Goods {
     public Goods() {
     }
 
-    public Goods(int goodsId, String goodsName, int goodsNum, String goodsMoney, String goodsDescription, String goodsTypeId, String goods, String goodsUrl, int goodsStatus) {
+    public Goods(int goodsId, String goodsName, int goodsNum, BigDecimal goodsMoney, String goodsDescription, String goodsTypeId, String goods, String goodsUrl, int goodsStatus) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.goodsNum = goodsNum;
@@ -64,11 +66,11 @@ public class Goods {
         this.goodsNum = goodsNum;
     }
 
-    public String getGoodsMoney() {
+    public BigDecimal getGoodsMoney() {
         return goodsMoney;
     }
 
-    public void setGoodsMoney(String goodsMoney) {
+    public void setGoodsMoney(BigDecimal goodsMoney) {
         this.goodsMoney = goodsMoney;
     }
 

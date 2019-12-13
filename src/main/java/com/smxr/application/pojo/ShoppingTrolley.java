@@ -7,21 +7,21 @@ import java.util.Date;
  * @author smxr
  * @date 2019/11/24
  * @time 1:24
- * 订单表
+ * 购物车表
  */
-public class Orders {
-    private int orderId;//订单id
+public class ShoppingTrolley {
+    private int shoppingTrolleyId;//订单id
     private int goodsId;//订单商品id
     private BigDecimal goodsMoney;//订单商品价格
     private int goodsNum;//订单商品数量
     private Date orderTime;//订单创建时间
     private int orderStatus;//订单状态（0未支付，1申请支付中，2已经支付）
 
-    public Orders() {
+    public ShoppingTrolley() {
     }
 
-    public Orders(int orderId, int goodsId, BigDecimal goodsMoney, int goodsNum, Date orderTime, int orderStatus) {
-        this.orderId = orderId;
+    public ShoppingTrolley(int shoppingTrolleyId, int goodsId, BigDecimal goodsMoney, int goodsNum, Date orderTime, int orderStatus) {
+        this.shoppingTrolleyId = shoppingTrolleyId;
         this.goodsId = goodsId;
         this.goodsMoney = goodsMoney;
         this.goodsNum = goodsNum;
@@ -29,12 +29,12 @@ public class Orders {
         this.orderStatus = orderStatus;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getShoppingTrolleyId() {
+        return shoppingTrolleyId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setShoppingTrolleyId(int shoppingTrolleyId) {
+        this.shoppingTrolleyId = shoppingTrolleyId;
     }
 
     public int getGoodsId() {
