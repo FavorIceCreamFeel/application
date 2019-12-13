@@ -16,34 +16,34 @@ import java.lang.annotation.Target;
 @Component
 @ConfigurationProperties(prefix = "phonecode")
 public class PhoneCode {
-    private String businessId;//网易短信业务ID
-    private String secretId;//产品密钥ID，产品标识
-    private String secretKey;//产品私有密钥，服务端生成签名信息使用
+    private String AppID;//AppID
+    private String account_SID;//开发者
+    private String auth_token;//
     private String API_URl;//请求路径
-    private String templateId;//短信模板id
+    private String TemplateId;//短信模板id
 
-    public String getBusinessId() {
-        return businessId;
+    public String getAppID() {
+        return AppID;
     }
 
-    public void setBusinessId(String businessId) {
-        this.businessId = businessId;
+    public void setAppID(String appID) {
+        AppID = appID;
     }
 
-    public String getSecretId() {
-        return secretId;
+    public String getAccount_SID() {
+        return account_SID;
     }
 
-    public void setSecretId(String secretId) {
-        this.secretId = secretId;
+    public void setAccount_SID(String account_SID) {
+        this.account_SID = account_SID;
     }
 
-    public String getSecretKey() {
-        return secretKey;
+    public String getAuth_token() {
+        return auth_token;
     }
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
+    public void setAuth_token(String auth_token) {
+        this.auth_token = auth_token;
     }
 
     public String getAPI_URl() {
@@ -55,21 +55,21 @@ public class PhoneCode {
     }
 
     public String getTemplateId() {
-        return templateId;
+        return TemplateId;
     }
 
     public void setTemplateId(String templateId) {
-        this.templateId = templateId;
+        TemplateId = templateId;
     }
 
     @Override
     public String toString() {
         return "PhoneCode{" +
-                "businessId='" + businessId + '\'' +
-                ", secretId='" + secretId + '\'' +
-                ", secretKey='" + secretKey + '\'' +
+                "AppID='" + AppID + '\'' +
+                ", account_SID='" + account_SID + '\'' +
+                ", auth_token='" + auth_token + '\'' +
                 ", API_URl='" + API_URl + '\'' +
-                ", templateId='" + templateId + '\'' +
+                ", TemplateId='" + TemplateId + '\'' +
                 '}';
     }
 }

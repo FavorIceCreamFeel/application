@@ -1,9 +1,11 @@
 package com.smxr.application.controller;
 
+import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
 import com.smxr.application.service.UserServer;
 import com.smxr.application.utils.ApplicationUtils;
 import com.smxr.application.utils.ApplicationUtilsOne;
+import com.smxr.application.utils.CCPRestSDK;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author smxr
@@ -25,6 +29,8 @@ public class ZeroController {
     private static Logger logger=LoggerFactory.getLogger(ZeroController.class);
     @Autowired
     private UserServer userServer;
+    @Autowired
+    private PhoneCode phoneCode;
     @Autowired
     private ApplicationUtils applicationUtils;
 
@@ -63,14 +69,15 @@ public class ZeroController {
      */
     @RequestMapping(value = "/addUser",method = RequestMethod.POST)
     @ResponseBody
-    public String addUser(@RequestParam(required = true,value = "phone")String phone,
+    public boolean addUser(@RequestParam(required = true,value = "phone")String phone,
                           @RequestParam(required = true,value = "number")String number,
                           String signUp){
-        if (signUp.equals("null")||signUp.equals("")){return "404";}
-        if (phone.equals("null")||phone.equals("")){return "404";}
-        if (number.equals("null")||number.equals("")){return "404";}
+        if (signUp.equals("null")||signUp.equals("")){return false;}
+        if (phone.equals("null")||phone.equals("")){return false;}
+        if (number.equals("null")||number.equals("")){return false;}
         Map<String, Long> codeMap = ApplicationUtils.getMap();
         Long aLong = codeMap.get(number);
+        if (aLong==null){return false;}
         logger.info("map的时间戳："+aLong);
         logger.info("前端传来code："+number);
         boolean b=false;
@@ -84,8 +91,9 @@ public class ZeroController {
             user.setUserAge(0);//默认年龄
             user.setCreateTime(ApplicationUtilsOne.getDateTime());//创建时间
              b = userServer.insertUser(user);//插入用户，返回Boolean值
+            return b;
         }
-        if(b){return "login";}else {return "404";}
+        return false;
     }
 
     /**
@@ -98,10 +106,43 @@ public class ZeroController {
     public boolean sendPhoneCode(@RequestParam(value = "phone") String phone){
         if (phone.equals("null")||phone.equals("")){return false;}
         if (userServer.selectUserByPhoneNumber(phone)){
-            //s数据未处理
-            String s = applicationUtils.sendPostPhoneNum(phone);
-            logger.info(s);//发送后-响应s    未处理
-            return true;
+            HashMap<String, Object> result = null;
+            CCPRestSDK restAPI = new CCPRestSDK();
+            restAPI.init("app.cloopen.com", "8883");
+            // 初始化服务器地址和端口，生产环境配置成app.cloopen.com，端口是8883.
+            restAPI.setAccount(phoneCode.getAccount_SID(),phoneCode.getAuth_token());
+            // 初始化主账号名称和主账号令牌，登陆云通讯网站后，可在控制首页中看到开发者主账号ACCOUNT SID和主账号令牌AUTH TOKEN。
+            restAPI.setAppId(phoneCode.getAppID());
+            // 请使用管理控制台中已创建应用的APPID。
+            String randomString = ApplicationUtils.getRandomString(6);
+            Map<String, Long> map = ApplicationUtils.getMap();
+            boolean boo=true;
+            while (boo){
+                if (map.size()!=0){
+                    if (map.get(randomString)!=null){
+                        randomString=ApplicationUtils.getRandomString(6);
+                    }else {
+                        boo=false;
+                    }
+                }else {
+                    boo=false;
+                } }
+            result = restAPI.sendTemplateSMS(phone,phoneCode.getTemplateId() ,new String[]{randomString,"1"});
+            if("000000".equals(result.get("statusCode"))){
+                map.put(randomString,System.currentTimeMillis());
+                logger.info("放入时间戳:"+randomString);
+                HashMap<String,Object> data = (HashMap<String, Object>) result.get("data");
+                Set<String> keySet = data.keySet();
+                for(String key:keySet){
+                    Object object = data.get(key);
+                    logger.info(key +" = "+object);
+                }
+                return true;
+            }else{
+                //异常返回输出错误码和错误信息
+                logger.info("错误码=" + result.get("statusCode") +" 错误信息= "+result.get("statusMsg"));
+                return false;
+            }
         }else {
             return false;
         }
