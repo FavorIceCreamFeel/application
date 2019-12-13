@@ -12,7 +12,7 @@ import java.util.Date;
  * @time 22:40
  * 工具类1号
  */
-public class applicationUtilsOne {
+public class ApplicationUtilsOne {
 
     /**
      * 获取格式化时间

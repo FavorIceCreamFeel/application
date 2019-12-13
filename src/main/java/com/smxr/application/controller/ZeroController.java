@@ -1,22 +1,17 @@
 package com.smxr.application.controller;
 
-import com.smxr.application.Application;
-import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
 import com.smxr.application.service.UserServer;
-import com.smxr.application.utils.applicationUtils;
-import com.smxr.application.utils.applicationUtilsOne;
+import com.smxr.application.utils.ApplicationUtils;
+import com.smxr.application.utils.ApplicationUtilsOne;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
-
-import static javafx.scene.input.KeyCode.L;
+import java.util.Map;
 
 /**
  * @author smxr
@@ -31,7 +26,7 @@ public class ZeroController {
     @Autowired
     private UserServer userServer;
     @Autowired
-    private applicationUtils applicationUtil;
+    private ApplicationUtils applicationUtils;
 
     /**
      * 登录成功后跳转到首页
@@ -71,17 +66,26 @@ public class ZeroController {
     public String addUser(@RequestParam(required = true,value = "phone")String phone,
                           @RequestParam(required = true,value = "number")String number,
                           String signUp){
-    if (signUp.equals("null")||signUp.equals("")){return "404";}
-    if (phone.equals("null")||phone.equals("")){return "404";}
-    if (number.equals("null")||number.equals("")){return "404";}
-    User user = new User();
-    user.setUserName(phone);
-    user.setUserPwd(number);
-    user.setPhoneNumber(phone);
-    user.setUserAge(0);
-    user.setCreateTime(applicationUtilsOne.getDateTime());
-    boolean b = userServer.insertUser(user);
-    if(b){return "login";}else {return "404";}
+        if (signUp.equals("null")||signUp.equals("")){return "404";}
+        if (phone.equals("null")||phone.equals("")){return "404";}
+        if (number.equals("null")||number.equals("")){return "404";}
+        Map<String, Long> codeMap = ApplicationUtils.getMap();
+        Long aLong = codeMap.get(number);
+        logger.info("map的时间戳："+aLong);
+        logger.info("前端传来code："+number);
+        boolean b=false;
+        //是否超过60秒
+        if (System.currentTimeMillis()-aLong<=60000){
+            logger.info("时间对比："+(System.currentTimeMillis()-aLong)+"");
+            User user = new User();
+            user.setUserName(phone);//默认名字是手机号
+            user.setUserPwd(number);//默认密码是code
+            user.setPhoneNumber(phone);
+            user.setUserAge(0);//默认年龄
+            user.setCreateTime(ApplicationUtilsOne.getDateTime());//创建时间
+             b = userServer.insertUser(user);//插入用户，返回Boolean值
+        }
+        if(b){return "login";}else {return "404";}
     }
 
     /**
@@ -94,7 +98,9 @@ public class ZeroController {
     public boolean sendPhoneCode(@RequestParam(value = "phone") String phone){
         if (phone.equals("null")||phone.equals("")){return false;}
         if (userServer.selectUserByPhoneNumber(phone)){
-//            applicationUtil.
+            //s数据未处理
+            String s = applicationUtils.sendPostPhoneNum(phone);
+            logger.info(s);//发送后-响应s    未处理
             return true;
         }else {
             return false;

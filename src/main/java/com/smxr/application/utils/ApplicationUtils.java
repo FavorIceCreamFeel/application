@@ -32,10 +32,15 @@ import java.util.*;
  * 工具类
  */
 @Component
-public class applicationUtils {
+public class ApplicationUtils {
     @Autowired
     private PhoneCode phoneCode;
     private static Map<String,Long> map=new HashMap<>();
+
+    public static Map<String, Long> getMap() {
+        return map;
+    }
+
     /**
      * 获取指定长度的随机字符串
      */
@@ -140,7 +145,19 @@ public class applicationUtils {
     public String sendPostPhoneNum(String phone){
     // 模板参数对应的json格式数据,例如模板为您的验证码为${p1},请于${p2}时间登陆到我们的服务器
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("p1", getRandomString(6));
+        String randomString = getRandomString(6);
+        boolean boo=true;
+        while (boo){
+        if (map.size()!=0){
+            if (map.get(randomString)!=null){
+                randomString=getRandomString(6);
+            }else {
+                boo=false;
+            }
+        }else {
+            boo=false;
+        } }
+        jsonObject.put("p1",randomString);
     jsonObject.put("p2", "60秒");
     String params = jsonObject.toJSONString();
         Map<String, String> data = null;
@@ -149,6 +166,8 @@ public class applicationUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        map.put(randomString,System.currentTimeMillis());
+        System.out.println("把验证码和时间戳添加到map里"+randomString+System.currentTimeMillis());
         //发送请求
         return sendPost(phoneCode.getAPI_URl(), data, Consts.UTF_8);
 }
