@@ -1,9 +1,3 @@
-/*
-*@Name: 母婴商城
-*@Author: xuzhiwen
-*@Copyright:layui.com
-*/
-
 layui.define(['layer'],function(exports){
 	var layer = layui.layer;
 	

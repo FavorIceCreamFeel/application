@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>首页</title>
   <link rel="stylesheet" type="text/css" href="../static/static/css/main.css" th:href="@{/static/css/main.css}">
   <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
   <script type="text/javascript" src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
@@ -14,12 +14,14 @@
   <div class="site-nav-bg">
     <div class="site-nav w1200">
       <p class="sn-back-home">
-<!--        <i class="layui-icon layui-icon-home"></i>-->
-<!--        <a href="#">首页</a>-->
+        <!--<i class="layui-icon layui-icon-home"></i>-->
+        <!--<a href="#">首页</a>-->
       </p>
       <div class="sn-quick-menu">
-        <div class="login"><a href="/zero/login">登录</a></div>
-        <div class="sp-cart"><a href="/index/orderList">购物车</a></div>
+            <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'#':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${userName}?${userName}:'登录'">登录</a></div>
+            <div class="sp-cart"><a href="/index/orderList">购物车</a></div>
+            <div class="sp-cart" style="margin-left: 20px"  th:unless="${#strings.isEmpty(power)}"><a href="http://localhost:8080/zero/index">后台管理</a></div>
+          <div class="sp-cart" style="margin-left: 20px"><a href="http://localhost:8080/logout">退出</a></div>
       </div>
     </div>
   </div>
@@ -33,7 +35,7 @@
         <div class="mallSearch">
           <form action="" class="layui-form" novalidate>
             <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">
+            <button class="layui-btn" style="" lay-submit lay-filter="formDemo">
                 <i class="layui-icon layui-icon-search"></i>
             </button>
             <input type="hidden" name="" value="">
@@ -154,7 +156,7 @@
 <script>
 
   layui.config({
-    base:  '../static/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+    base:  '../static/static/js/' //你存放新模块的目录，注意，不是layui的模块目录
   }).use(['mm','laypage','jquery'],function(){
       var laypage = layui.laypage,$ = layui.$,
      mm = layui.mm;

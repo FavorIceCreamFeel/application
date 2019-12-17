@@ -9,10 +9,19 @@ import com.smxr.application.utils.CCPRestSDK;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -39,9 +48,30 @@ public class ZeroController {
      * @return
      */
     @RequestMapping("/index")
-    public String indexPage(){
+    public String indexPage(HttpServletRequest request,Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getPrincipal() instanceof UserDetails){
+        String name = authentication.getName();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            if (authority.toString().equals("SSR")){
+                logger.info("后台权限判断：true");
+                model.addAttribute("power",authority.toString());
+            }
+        }
+        model.addAttribute("userName",name);
+        }
+        //登录数据填充处
 
-        return "404";
+        return "index";
+    }
+    @RequestMapping("/login")
+    public String signInPage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,Model model,
+                             @RequestParam(required = false,value = "signUp",defaultValue = "null")String signUp){
+        if (signUp.equals("signUp")){
+            return "login";
+        }
+        return "redirect:/zero/index";//调整为转发
     }
     @RequestMapping("/signUp")
     public String signUpPage(Model model,String signUp){
@@ -49,10 +79,6 @@ public class ZeroController {
             return "404";
         model.addAttribute("signUp", signUp);
         model.addAttribute("addUser", 1);
-        return "login";
-    }
-    @RequestMapping("/login")
-    public String signInPage(){
         return "login";
     }
     @RequestMapping("/err")

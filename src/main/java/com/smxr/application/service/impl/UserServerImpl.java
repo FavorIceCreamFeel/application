@@ -41,7 +41,7 @@ public class UserServerImpl implements UserServer {
         logger.info("用户："+user);
         if (user==null) return null;
         StringBuilder stringBuilder = new StringBuilder();
-        List powerStringList = userDao.queryPowerStringByPhoneNum(user.getPhoneNumber());
+        List powerStringList = userDao.queryPowerStringByPhoneNum(Long.parseLong(s));
         for (int i = 0; i <powerStringList.size() ; i++) {
             if (i==powerStringList.size()-1){
                 stringBuilder.append(powerStringList.get(i));

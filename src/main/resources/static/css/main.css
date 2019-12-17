@@ -1,16 +1,4 @@
 @charset "utf-8";
-/*
-* @Author: Larry
-* @Date:   2016-12-15 17:20:54
-* @Last Modified by:   qinsh
-* @Last Modified time: 2016-12-20 18:36:09
-* +----------------------------------------------------------------------
-* | LarryBlogCMS [ LarryCMS网站内容管理系统 ]
-* | Copyright (c) 2016-2017 http://www.larrycms.com All rights reserved.
-* | Licensed ( http://www.larrycms.com/licenses/ )
-* | Author: qinshouwei <313492783@qq.com>
-* +----------------------------------------------------------------------
-*/
 body{background:#FFFFFF;font-size:14px;padding:0px !important;margin:0px !important;font-size:12px;font-family: "微软雅黑","Microsoft YaHei","Microsoft YaHei UI", "Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
 ul li{list-style:none;}
 h1,h2,h3,h4,h5,h6,a,p,span{font-family: "微软雅黑","Microsoft YaHei","Microsoft YaHei UI","Hiragino Sans GB W3","Segoe UI", Arial, Verdana, Sans-Serif, sans-serif;}
