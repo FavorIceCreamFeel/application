@@ -2,6 +2,7 @@ package com.smxr.application.controller;
 
 import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
+import com.smxr.application.service.GoodsTypeService;
 import com.smxr.application.service.UserServer;
 import com.smxr.application.utils.ApplicationUtils;
 import com.smxr.application.utils.ApplicationUtilsOne;
@@ -21,10 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author smxr
@@ -42,6 +40,8 @@ public class ZeroController {
     private PhoneCode phoneCode;
     @Autowired
     private ApplicationUtils applicationUtils;
+    @Autowired
+    private GoodsTypeService goodsTypeService;
 
     /**
      * 登录成功后跳转到首页
@@ -62,7 +62,8 @@ public class ZeroController {
         model.addAttribute("userName",name);
         }
         //登录数据填充处
-
+        HashMap<String, ArrayList<String>> stringArrayListHashMap = goodsTypeService.queryGoodsTypes();
+        model.addAttribute("goodsTypeList",stringArrayListHashMap);
         return "index";
     }
     @RequestMapping("/login")
