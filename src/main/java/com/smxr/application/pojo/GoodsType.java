@@ -4,19 +4,21 @@ package com.smxr.application.pojo;
  * @author smxr
  * @date 2019/12/7
  * @time 16:23
- * 商品分类表
+ * 商品分类表二级分类
  */
 public class GoodsType {
-    private int goodsTypeId;//分类id
-    private int goodsTypeName;//分类名字
-    private int goodsTypeTime;//分类创建时间
+    private int goodsTypeId;//二级分类id
+    private String goodsTypeName;//二级分类名字
+    private int typeId;//一级分类Id
+    private String goodsTypeTime;//分类创建时间
 
     public GoodsType() {
     }
 
-    public GoodsType(int goodsTypeId, int goodsTypeName, int goodsTypeTime) {
+    public GoodsType(int goodsTypeId, String goodsTypeName, int typeId, String goodsTypeTime) {
         this.goodsTypeId = goodsTypeId;
         this.goodsTypeName = goodsTypeName;
+        this.typeId = typeId;
         this.goodsTypeTime = goodsTypeTime;
     }
 
@@ -28,19 +30,27 @@ public class GoodsType {
         this.goodsTypeId = goodsTypeId;
     }
 
-    public int getGoodsTypeName() {
+    public String getGoodsTypeName() {
         return goodsTypeName;
     }
 
-    public void setGoodsTypeName(int goodsTypeName) {
+    public void setGoodsTypeName(String goodsTypeName) {
         this.goodsTypeName = goodsTypeName;
     }
 
-    public int getGoodsTypeTime() {
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getGoodsTypeTime() {
         return goodsTypeTime;
     }
 
-    public void setGoodsTypeTime(int goodsTypeTime) {
+    public void setGoodsTypeTime(String goodsTypeTime) {
         this.goodsTypeTime = goodsTypeTime;
     }
 
@@ -48,8 +58,9 @@ public class GoodsType {
     public String toString() {
         return "GoodsType{" +
                 "goodsTypeId=" + goodsTypeId +
-                ", goodsTypeName=" + goodsTypeName +
-                ", goodsTypeTime=" + goodsTypeTime +
+                ", goodsTypeName='" + goodsTypeName + '\'' +
+                ", typeId=" + typeId +
+                ", goodsTypeTime='" + goodsTypeTime + '\'' +
                 '}';
     }
 }
