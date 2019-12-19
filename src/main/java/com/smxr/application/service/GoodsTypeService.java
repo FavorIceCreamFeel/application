@@ -1,5 +1,7 @@
 package com.smxr.application.service;
 
+import com.smxr.application.pojo.GoodsType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,5 +11,5 @@ import java.util.HashMap;
  * @time 18:35
  */
 public interface GoodsTypeService {
-    public HashMap<String, ArrayList<String>> queryGoodsTypes();
+    public HashMap<String, ArrayList<GoodsType>> queryGoodsTypes();
 }

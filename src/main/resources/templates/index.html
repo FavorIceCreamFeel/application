@@ -52,9 +52,6 @@
         <div class="inner-cont1 w1200">
           <div class="inner-cont2">
             <a href="index.html" class="active" th:href="@{/index/goodList}">所有商品</a>
-<!--            <a href="buytoday.html">今日团购</a>-->
-<!--            <a href="information.html">母婴资讯</a>-->
-<!--            <a href="about.html">关于我们</a>-->
           </div>
         </div>
       </div>
@@ -67,7 +64,7 @@
             <dl th:each="goodsTypeMap : ${goodsTypeList}">
              <dt th:text="${goodsTypeMap.key}">奶粉辅食</dt>
              <dd th:each="goodsTypesList:${goodsTypeMap.value}">
-             <a href="javascript:;" th:text="${goodsTypesList}">进口奶粉</a>
+             <a href="#" th:onclick="'javascript:showGoodsTypes('+${goodsTypesList.getGoodsTypeId()}+')'" th:text="${goodsTypesList.getGoodsTypeName()}">进口奶粉</a>
              </dd>
             </dl>
           </div>
@@ -93,10 +90,10 @@
                   <a href="javascript:;"><img src="" th:src="${list.goodsUrl}"></a>
                 </div>
                 <div class="text">
-                  <p class="title"><td th:text="${list.goodsName}"></td></p>
+                  <p class="title">123<td th:text="${list.goodsName}"></td></p>
                   <p class="price">
-                    <span class="pri"><td th:text="${list.goodsMoney}"></td></span>
-<!--                    <span class="nub">1266付款</span>-->
+                    <span class="pri">13<td th:text="${list.goodsMoney}"></td></span>
+                    <span class="nub">1266付款</span>
                   </p>
                 </div>
                </div>
@@ -141,19 +138,17 @@
 
 
     // 模版引擎导入
-    //  var html = demo.innerHTML;
-    //  var listCont = document.getElementById('list-cont');
-    //  // console.log(layui.router("#/about.html"))
-    // mm.request({
-    //     url: '../json/commodity.json',
-    //     success : function(res){
-    //       console.log(res)
-    //       listCont.innerHTML = mm.renderHtml(html,res)
-    //     },
-    //     error: function(res){
-    //       console.log(res);
-    //     }
-    //   })
+     var html = demo.innerHTML;
+     var listCont = document.getElementById('list-cont');
+    mm.request({
+        url: '../json/commodity.json',
+        success : function(res){
+          listCont.innerHTML = mm.renderHtml(html,res)
+        },
+        error: function(res){
+          console.log(res);
+        }
+      });
 
     $('.sort a').on('click',function(){
       $(this).addClass('active').siblings().removeClass('active');

@@ -29,15 +29,12 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
     /**
      * 获取首页分类一级二级信息
      */
-    public HashMap<String,ArrayList<String>> queryGoodsTypes(){
+    public HashMap<String,ArrayList<GoodsType>> queryGoodsTypes(){
         List<Types> types = typesDao.selectTypesAll();
-        HashMap<String, ArrayList<String>> goodsTypeHashMap = new HashMap<>();
+        HashMap<String, ArrayList<GoodsType>> goodsTypeHashMap = new HashMap<>();
         for (Types type : types) {
             List<GoodsType> goodsTypeList = goodsTypeDao.selectGoodsTypeByTypeId(type.getTypeId());
-            ArrayList<String> stringArrayList = new ArrayList<>();
-            for (GoodsType goodsType : goodsTypeList) {
-                stringArrayList.add(goodsType.getGoodsTypeName());
-            }
+            ArrayList<GoodsType> stringArrayList = new ArrayList<>(goodsTypeList);
             goodsTypeHashMap.put(type.getTypeName(),stringArrayList);
         }
         return goodsTypeHashMap;
