@@ -82,16 +82,20 @@
             </div>
 
 
-
+            <!-- 开始      -->
             <div class="cont-list layui-clear" id="list-cont">
               <tr th:each="list : ${goodsList}">
+            <!--    图片框     循环添加以下       -->
                <div class="item">
                 <div class="img">
+                  <!--     图片路径             -->
                   <a href="javascript:;"><img src="" th:src="${list.goodsUrl}"></a>
                 </div>
                 <div class="text">
+                  <!--      图片下面的文本 的标题            -->
                   <p class="title">123<td th:text="${list.goodsName}"></td></p>
                   <p class="price">
+                    <!--      图片下面的文本 的  左的价格  右边的人数      -->
                     <span class="pri">13<td th:text="${list.goodsMoney}"></td></span>
                     <span class="nub">1266付款</span>
                   </p>
@@ -101,9 +105,9 @@
             </div>
 
 
-              <!-- 模版引擎导入 -->
+<!--               模版引擎导入 -->
             <!-- <script type="text/html" id="demo">
-              {{# layui.each(d.menu.milk.content,function(index,item){}}    
+              {{# layui.each(d.menu.milk.content,function(index,item){}}
                 <div class="item">
                   <div class="img">
                     <a href="javascript:;"><img src="{{item.img}}"></a>
@@ -117,15 +121,15 @@
                   </div>
                 </div>
               {{# }); }}
-            </script> -->
+            </script>-->
             <div id="demo0" style="text-align: center;"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
+<script type="text/javascript" src="../static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script>
-
   layui.config({
     base:  '../static/js/' //你存放新模块的目录，注意，不是layui的模块目录
   }).use(['mm','laypage','jquery'],function(){
@@ -138,17 +142,17 @@
 
 
     // 模版引擎导入
-     var html = demo.innerHTML;
-     var listCont = document.getElementById('list-cont');
-    mm.request({
-        url: '../json/commodity.json',
-        success : function(res){
-          listCont.innerHTML = mm.renderHtml(html,res)
-        },
-        error: function(res){
-          console.log(res);
-        }
-      });
+    //  var html = demo.innerHTML;
+    //  var listCont = document.getElementById('list-cont');
+    // mm.request({
+    //     url: '../json/commodity.json',
+    //     success : function(res){
+    //       listCont.innerHTML = mm.renderHtml(html,res)
+    //     },
+    //     error: function(res){
+    //       console.log(res);
+    //     }
+    //   });
 
     $('.sort a').on('click',function(){
       $(this).addClass('active').siblings().removeClass('active');
@@ -165,7 +169,22 @@
 
 });
 </script>
-
-
+<script type="text/javascript">
+function shows(GoodsTypeId) {
+  $.ajax({
+    type:"post",
+    url:"http://localhost:8080/zero/getGoodsList",
+    data:{"phone":GoodsTypeId},
+    dataType:"json",
+    success:function (data) {
+      if (data==null||data.size()===0){
+        alert("数据加载失败！请刷新也页面");
+        return;
+      //  https://blog.csdn.net/weixin_39059334/article/details/78222740
+      }
+    }
+  });
+}
+</script>
 </body>
 </html>
