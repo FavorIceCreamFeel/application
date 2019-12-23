@@ -43,4 +43,11 @@ public interface UserDao {
     @Select("select count(1) from user where phoneNumber=#{param}")
     public int selectUserByPhoneNumber(String phoneNumber);
 
+    //用户总量
+    @Select("select count(phoneNumber) from user")
+    public Integer userNum();
+
+    //今日注册人数
+    @Select("select count(phoneNumber) from user where to_days(createTime) = to_days(now())")
+    public Integer userDayNum();
 }
