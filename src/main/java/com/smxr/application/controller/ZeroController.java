@@ -11,6 +11,7 @@ import com.smxr.application.utils.CCPRestSDK;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +47,7 @@ public class ZeroController {
      * @return
      */
     @RequestMapping("/index")
-    public String indexPage(HttpServletRequest request,Model model){
+    public String indexPage(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.getPrincipal() instanceof UserDetails){
         String name = authentication.getName();
@@ -65,12 +66,15 @@ public class ZeroController {
         return "index";
     }
     @RequestMapping("/login")
-    public String signInPage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,Model model,
-                             @RequestParam(required = false,value = "signUp",defaultValue = "null")String signUp){
+    public String signInPage(@RequestParam(required = false,value = "signUp",defaultValue = "null")String signUp){
         if (signUp.equals("signUp")){
             return "login";
         }
         return "redirect:/zero/index";
+    }
+    @RequestMapping("/reLogin")
+    public String signInPage(){
+        return "login";
     }
     @RequestMapping("/signUp")
     public String signUpPage(Model model,String signUp){

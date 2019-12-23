@@ -61,7 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/favicon.ico","/zero/**","/zero/index").permitAll()
                 .antMatchers("/user","/").hasAuthority("SSR")
                 .and()
-                .formLogin().loginPage("/zero/login").successForwardUrl("/zero/index").failureForwardUrl("/zero/login")
+                .formLogin().loginPage("/zero/login").successForwardUrl("/zero/index").failureForwardUrl("/zero/reLogin")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/zero/login")
                 .and()

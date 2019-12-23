@@ -14,8 +14,8 @@
   <div class="site-nav-bg">
     <div class="site-nav w1200">
       <p class="sn-back-home">
-        <!--<i class="layui-icon layui-icon-home"></i>-->
-        <!--<a href="#">首页</a>-->
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="http://localhost:8080/zero/index">首页</a>
       </p>
       <div class="sn-quick-menu">
             <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'#':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${userName}?${userName}:'登录'">登录</a></div>
@@ -62,9 +62,9 @@
           <div class="title">所有分类</div>
           <div class="list-box">
             <dl th:each="goodsTypeMap : ${goodsTypeList}">
-             <dt th:text="${goodsTypeMap.key}">奶粉辅食</dt>
+             <dt th:text="${goodsTypeMap.key}">xxxx</dt>
              <dd th:each="goodsTypesList:${goodsTypeMap.value}">
-             <a href="#" th:onclick="'javascript:showGoodsTypes('+${goodsTypesList.getGoodsTypeId()}+')'" th:text="${goodsTypesList.getGoodsTypeName()}">进口奶粉</a>
+             <a href="#" th:onclick="'javascript:showGoodsTypes('+${goodsTypesList.getGoodsTypeId()}+')'" th:text="${goodsTypesList.getGoodsTypeName()}">xxxx</a>
              </dd>
             </dl>
           </div>

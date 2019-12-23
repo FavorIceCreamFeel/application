@@ -35,11 +35,11 @@ public class UserServerImpl implements UserServer {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         logger.info("用户账号："+s);
-        if (s==null) return null;
-        if (s.equals("")) return null;
+        if (s==null){ return null;}
+        if (s.equals("")){ return null;}
         User user = userDao.queryUserByPhoneNum(s);
         logger.info("用户："+user);
-        if (user==null) return null;
+        if (user==null){ return null;}
         StringBuilder stringBuilder = new StringBuilder();
         List powerStringList = userDao.queryPowerStringByPhoneNum(Long.parseLong(s));
         for (int i = 0; i <powerStringList.size() ; i++) {
