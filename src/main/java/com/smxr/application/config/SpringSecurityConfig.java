@@ -58,7 +58,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/favicon.ico","/zero/**","/zero/index").permitAll()
+                .antMatchers("/favicon.ico","/zero/**","/addOrder/shows").permitAll()
                 .antMatchers("/user","/").hasAuthority("SSR")
                 .and()
                 .formLogin().loginPage("/zero/login").successForwardUrl("/zero/index").failureForwardUrl("/zero/reLogin")

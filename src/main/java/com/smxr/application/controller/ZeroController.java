@@ -47,18 +47,22 @@ public class ZeroController {
      * @return
      */
     @RequestMapping("/index")
-    public String indexPage(Model model){
+    public String indexPage(HttpServletRequest request,Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.getPrincipal() instanceof UserDetails){
-        String name = authentication.getName();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for (GrantedAuthority authority : authorities) {
-            if (authority.toString().equals("SSR")){
-                logger.info("后台权限判断：true");
-                model.addAttribute("power",authority.toString());
+            String name = authentication.getName();
+            User user = userServer.queryUserByPhoneNumber(name);
+            if (user==null)
+                return "index";
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            for (GrantedAuthority authority : authorities) {
+                if (authority.toString().equals("SSR")){
+                    logger.info("后台权限判断：true");
+                    model.addAttribute("power",authority.toString());
+                }
             }
-        }
-        model.addAttribute("userName",name);
+        model.addAttribute("userName",user.getUserName());
+        request.getSession().setAttribute("userName",user.getUserName());
         }
         //登录数据填充处
         HashMap<String, ArrayList<GoodsType>> stringArrayListHashMap = goodsTypeService.queryGoodsTypes();
@@ -176,5 +180,6 @@ public class ZeroController {
             return false;
         }
     }
+
 
 }

@@ -110,6 +110,11 @@ public class UserServerImpl implements UserServer {
         return userDao.queryUserByPhoneNum(phoneNumber) == null;
     }
 
+    @Override
+    public User queryUserByPhoneNumber(String phoneNumber) {
+        return userDao.queryUserByPhoneNum(phoneNumber);
+    }
+
     /**
      * 旧密码校验
      * @param userName

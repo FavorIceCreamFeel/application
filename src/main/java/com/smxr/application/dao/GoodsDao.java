@@ -23,5 +23,4 @@ public interface GoodsDao {
     @Select("select  o.orderId,o.goodsNum,o.goodsMoney,g.goodsUrl from  goods g  join  orders o on o.goodsId=g.goodsId")
     List<Orders> findAllOrder();
 
-    //
 }

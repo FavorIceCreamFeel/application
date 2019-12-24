@@ -14,17 +14,19 @@ public class Orders {
     private int goodsId;//订单商品id
     private BigDecimal goodsMoney;//订单商品价格
     private int goodsNum;//订单商品数量
+    private String orderUser;//订单用户——手机号
     private Date orderTime;//订单创建时间
     private int orderStatus;//订单状态（0未支付，1申请支付中，2已经支付）
 
     public Orders() {
     }
 
-    public Orders(int orderId, int goodsId, BigDecimal goodsMoney, int goodsNum, Date orderTime, int orderStatus) {
+    public Orders(int orderId, int goodsId, BigDecimal goodsMoney, int goodsNum, String orderUser, Date orderTime, int orderStatus) {
         this.orderId = orderId;
         this.goodsId = goodsId;
         this.goodsMoney = goodsMoney;
         this.goodsNum = goodsNum;
+        this.orderUser = orderUser;
         this.orderTime = orderTime;
         this.orderStatus = orderStatus;
     }
@@ -75,5 +77,26 @@ public class Orders {
 
     public void setOrderStatus(int orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public String getOrderUser() {
+        return orderUser;
+    }
+
+    public void setOrderUser(String orderUser) {
+        this.orderUser = orderUser;
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderId=" + orderId +
+                ", goodsId=" + goodsId +
+                ", goodsMoney=" + goodsMoney +
+                ", goodsNum=" + goodsNum +
+                ", orderUser='" + orderUser + '\'' +
+                ", orderTime=" + orderTime +
+                ", orderStatus=" + orderStatus +
+                '}';
     }
 }

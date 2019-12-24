@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>我的购物车</title>
-  <link rel="stylesheet" type="text/css" href="../../static/static/css/main.css" th:href="@{/static/css/main.css}">
-  <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" th:href="@{/../../static/layui/css/layui.css}">
-  <script type="text/javascript" src="../../static/layui/layui.js" th:href="@{/../../static/layui/layui.js}"></script>
+  <link rel="stylesheet" type="text/css" href="../static/static/css/main.css" th:href="@{/static/css/main.css}">
+  <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+  <script type="text/javascript" src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-
 </head>
 <body>
 
-  <div class="site-nav-bg">
-    <div class="site-nav w1200">
-<!--      <p class="sn-back-home">-->
-<!--        <i class="layui-icon layui-icon-home"></i>-->
-<!--        <a href="#">首页</a>-->
-<!--      </p>-->
-      <div class="sn-quick-menu">
-        <div class="login"><a href="../zero/login" >登录</a></div>
-        <div class="sp-cart"><a href="orderList">购物车</a></div>
-      </div>
+
+<div class="site-nav-bg">
+  <div class="site-nav w1200">
+    <p class="sn-back-home">
+      <i class="layui-icon layui-icon-home"></i>
+      <a href="http://localhost:8080/zero/index">首页</a>
+    </p>
+    <div class="sn-quick-menu">
+      <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'#':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${userName}?${userName}:'登录'">登录</a></div>
+      <div class="sp-cart"><a href="/index/orderList">购物车</a></div>
+      <div class="sp-cart" style="margin-left: 20px"><a href="http://localhost:8080/logout">退出</a></div>
     </div>
   </div>
-
+</div>
 
 
   <div class="header">
@@ -54,7 +54,7 @@
       <div class="inner-cont0">
         <div class="inner-cont1 w1200">
           <div class="inner-cont2">
-            <a href="goodList" class="active">所有商品</a>
+            <a href="goodList" class="active">我的购物车</a>
 <!--            <a href="buytoday.html">今日团购</a>-->
 <!--            <a href="information.html">母婴资讯</a>-->
 <!--            <a href="about.html">关于我们</a>-->
@@ -62,6 +62,7 @@
         </div>
       </div>
     </div>
+<!--    广告-->
 <!--    <div class="banner-bg w1200">-->
 <!--      <h3>夏季清仓</h3>-->
 <!--      <p>宝宝被子、宝宝衣服3折起</p>-->

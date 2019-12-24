@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ZhangRongFei
@@ -37,4 +38,15 @@ public class OrderServiceImpl implements OrderService {
             return true;
         return false;
     }
+
+    /**
+     * 查询所有订单ByPhone
+     * @param phone
+     * @return
+     */
+    @Override
+    public List<Orders> selectOrdersAllByPhone(String phone) {
+        return ordersDao.selectOrdersAllByPhone(phone);
+    }
+
 }
