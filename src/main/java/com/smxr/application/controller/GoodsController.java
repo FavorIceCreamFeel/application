@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/index")
+@RequestMapping("/Goods")
 public class GoodsController {
     private static Logger logger= LoggerFactory.getLogger(GoodsController.class);
     @Autowired
@@ -39,6 +39,27 @@ public class GoodsController {
         List<Orders> allOrder = goodsServer.findAllOrder();
         model.addAttribute("orderList",allOrder);
         return "show/shopcart";
+    }
+    /**
+     * 商品展示
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/showGoods")
+    public String showGoods(HttpServletRequest request, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails){
+            String userName = (String)request.getSession().getAttribute("userName");
+
+            model.addAttribute("userName",userName);
+            logger.info("获取用户所有订单：");
+//            model.addAttribute("orders",);
+            logger.info("进入购物车！用户："+userName);
+            return "show/shopcart";
+        }else {
+            return "show/shopcart";
+        }
     }
 
 }
