@@ -26,4 +26,14 @@ public class GoodsServerImpl implements GoodsServer {
     public List<Orders> findAllOrder() {
         return goodsDao.findAllOrder();
     }
+
+    @Override
+    public Goods queryGoodsById(int goodsId) {
+        return goodsDao.selectGoodsById(goodsId);
+    }
+
+    @Override
+    public List<Goods> selectGoodsByType(int goodsTypeId) {
+        return goodsDao.selectGoodsByType(goodsTypeId);
+    }
 }

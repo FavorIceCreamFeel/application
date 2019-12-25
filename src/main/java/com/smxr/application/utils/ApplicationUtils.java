@@ -20,7 +20,6 @@ public class ApplicationUtils {
     @Autowired
     private PhoneCode phoneCode;
     private static Map<String,Long> map=new HashMap<>();
-
     public static Map<String, Long> getMap() {
         return map;
     }

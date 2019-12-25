@@ -14,22 +14,20 @@ public class Goods {
     private int goodsNum;//商品数量
     private BigDecimal goodsMoney;//商品价格
     private String goodsDescription;//商品描述
-    private String goodsTypeId;//商品类型ID
-    private String goods;//商品
+    private int goodsTypeId;//商品类型ID
     private String goodsUrl;//商品图片存储路径
-    private int goodsStatus;//商品状态
+    private int goodsStatus;//商品状态 默认上架1，0下架
 
     public Goods() {
     }
 
-    public Goods(int goodsId, String goodsName, int goodsNum, BigDecimal goodsMoney, String goodsDescription, String goodsTypeId, String goods, String goodsUrl, int goodsStatus) {
+    public Goods(int goodsId, String goodsName, int goodsNum, BigDecimal goodsMoney, String goodsDescription, int goodsTypeId, String goodsUrl, int goodsStatus) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.goodsNum = goodsNum;
         this.goodsMoney = goodsMoney;
         this.goodsDescription = goodsDescription;
         this.goodsTypeId = goodsTypeId;
-        this.goods = goods;
         this.goodsUrl = goodsUrl;
         this.goodsStatus = goodsStatus;
     }
@@ -82,14 +80,6 @@ public class Goods {
         this.goodsDescription = goodsDescription;
     }
 
-    public String getGoods() {
-        return goods;
-    }
-
-    public void setGoods(String goods) {
-        this.goods = goods;
-    }
-
     public int getGoodsStatus() {
         return goodsStatus;
     }
@@ -98,11 +88,11 @@ public class Goods {
         this.goodsStatus = goodsStatus;
     }
 
-    public String getGoodsTypeId() {
+    public int getGoodsTypeId() {
         return goodsTypeId;
     }
 
-    public void setGoodsTypeId(String goodsTypeId) {
+    public void setGoodsTypeId(int goodsTypeId) {
         this.goodsTypeId = goodsTypeId;
     }
 
@@ -115,7 +105,6 @@ public class Goods {
                 ", goodsMoney='" + goodsMoney + '\'' +
                 ", goodsDescription='" + goodsDescription + '\'' +
                 ", goodsTypeId='" + goodsTypeId + '\'' +
-                ", goods='" + goods + '\'' +
                 ", goodsStatus=" + goodsStatus +
                 '}';
     }

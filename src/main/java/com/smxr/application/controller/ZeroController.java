@@ -1,8 +1,10 @@
 package com.smxr.application.controller;
 
+import com.smxr.application.pojo.Goods;
 import com.smxr.application.pojo.GoodsType;
 import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
+import com.smxr.application.service.GoodsServer;
 import com.smxr.application.service.GoodsTypeService;
 import com.smxr.application.service.UserServer;
 import com.smxr.application.utils.ApplicationUtils;
@@ -42,6 +44,8 @@ public class ZeroController {
     private ApplicationUtils applicationUtils;
     @Autowired
     private GoodsTypeService goodsTypeService;
+    @Autowired
+    private GoodsServer goodsServer;
     /**
      * 登录成功后跳转到首页
      * @return
@@ -67,6 +71,14 @@ public class ZeroController {
         //登录数据填充处
         HashMap<String, ArrayList<GoodsType>> stringArrayListHashMap = goodsTypeService.queryGoodsTypes();
         model.addAttribute("goodsTypeList",stringArrayListHashMap);
+        logger.info("商品分类填充完成");
+        Object goodsId = request.getAttribute("goodsId");
+        if (goodsId==null){
+            goodsId=1;
+        }
+        List<Goods> goods = goodsServer.selectGoodsByType((int)goodsId);
+        model.addAttribute("goodsList",goods);
+        logger.info("商品填充完成");
         return "index";
     }
     @RequestMapping("/login")

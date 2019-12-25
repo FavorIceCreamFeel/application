@@ -9,4 +9,6 @@ public interface GoodsServer {
 
     List<Goods> findAll();
     List<Orders> findAllOrder();
+    Goods queryGoodsById(int goodsId);
+    List<Goods> selectGoodsByType(int goodsTypeId);
 }

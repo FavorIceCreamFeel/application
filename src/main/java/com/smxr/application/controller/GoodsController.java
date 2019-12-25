@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,7 +30,7 @@ public class GoodsController {
     public String findAll(Model model){
         List<Goods> goodsList = goodsServer.findAll();
 
-        model.addAttribute("goodsList",goodsList);
+//        model.addAttribute("goodsList",goodsList);
 
         return "index";
     }
@@ -42,24 +43,18 @@ public class GoodsController {
     }
     /**
      * 商品展示
-     * @param request
+     * @param goodId
      * @param model
      * @return
      */
     @RequestMapping(value = "/showGoods")
-    public String showGoods(HttpServletRequest request, Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails){
-            String userName = (String)request.getSession().getAttribute("userName");
-
-            model.addAttribute("userName",userName);
-            logger.info("获取用户所有订单：");
-//            model.addAttribute("orders",);
-            logger.info("进入购物车！用户："+userName);
-            return "show/shopcart";
-        }else {
-            return "show/shopcart";
+    public String showGoods(@RequestParam(required = true,value = "goodId")Integer goodId, Model model){
+        Goods goods = goodsServer.queryGoodsById(goodId);
+        if (goods==null){
+            return "404";
         }
+        model.addAttribute("goods",goods);
+        return "show/details";
     }
 
 }
