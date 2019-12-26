@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <title>商品展示</title>
-  <link rel="stylesheet" type="text/css" href="../../static/static/css/main.css" th:href="@{/static/css/main.css}">
-  <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" th:href="@{../../static/layui/css/layui.css}">
-  <script type="text/javascript" src="../../static/layui/layui.js" th:src="@{../../static/layui/layui.js}"></script>
+  <link rel="stylesheet" type="text/css" href="../static/static/css/main.css" th:href="@{/static/css/main.css}">
+  <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+  <script type="text/javascript" src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
@@ -49,9 +49,9 @@
   <div class="content content-nav-base datails-content">
     <div class="main-nav">
       <div class="inner-cont0">
-        <div class="inner-cont1 w1200">
+        <div class="inner-cont1 w1200" style="margin-top: 100px">
           <div class="inner-cont2">
-            <a href="../index.html" class="active">所有商品</a>
+            <a th:href="@{/zero/index}" class="active">所有商品</a>
 <!--            <a href="buytoday.html">今日团购</a>-->
 <!--            <a href="information.html">母婴资讯</a>-->
 <!--            <a href="about.html">关于我们</a>-->
@@ -60,26 +60,27 @@
       </div>
     </div>
     <div class="data-cont-wrap w1200">
-<!--      <div class="crumb">-->
-<!--&lt;!&ndash;        <a href="javascript:;">首页</a>&ndash;&gt;-->
-<!--        <span>></span>-->
-<!--        <a href="javascript:;">所有商品</a>-->
-<!--        <span>></span>-->
-<!--        <a href="javascript:;">产品详情</a>-->
-<!--      </div>-->
+      <div class="crumb">
+        <a href="javascript:;"></a>
+        <span></span>
+        <a href="javascript:;"></a>
+        <span></span>
+        <a href="javascript:;"></a>
+      </div>
       <div class="product-intro layui-clear">
         <div class="preview-wrap">
-          <a href="javascript:;"><img src="../../static/static/img/more2.jpg" th:src="@{/static/img/more2.jpg}"></a>
+          <a href="javascript:;"><img src="../../static/static/img/more2.jpg" th:src="@{${goods.getGoodsUrl()}}"></a>
         </div>
         <div class="itemInfo-wrap">
           <div class="itemInfo">
             <div class="title">
-              <h4>男女宝宝秋冬装套装0一1岁婴儿衣服潮加厚连体衣保暖冬季外出抱衣 </h4>
+              <h4 th:text="${goods.getGoodsDescription()}">男女宝宝秋冬装套装0一1岁婴儿衣服潮加厚连体衣保暖冬季外出抱衣 </h4>
               <span><i class="layui-icon layui-icon-rate-solid"></i>收藏</span>
             </div>
             <div class="summary">
-              <p class="reference"><span>参考价</span> <del>￥280.00</del></p>
-              <p class="activity"><span>活动价</span><strong class="price"><i>￥</i>99.00</strong></p>
+            <!--   再详细修改          -->
+              <p class="reference"><span>参考价</span> <del>￥<span th:text="${goods.getGoodsMoney()}">99.00</span></del></p>
+              <p class="activity"><span>活动价</span><strong class="price" ><i>￥</i><span th:text="${goods.getGoodsMoney()}">99.00</span></strong></p>
               <p class="address-box"><span>送&nbsp;&nbsp;&nbsp;&nbsp;至</span><strong class="address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong></p>
             </div>
             <div class="choose-attrs">
@@ -98,7 +99,7 @@
   </div>
 <script type="text/javascript">
   layui.config({
-    base: '../../static/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+    base: '../static/js/' //你存放新模块的目录，注意，不是layui的模块目录
   }).use(['mm','jquery'],function(){
       var mm = layui.mm,$ = layui.$;
       var cur = $('.number-cont input').val();

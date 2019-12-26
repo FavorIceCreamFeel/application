@@ -43,13 +43,13 @@ public class GoodsController {
     }
     /**
      * 商品展示
-     * @param goodId
+     * @param goodsId
      * @param model
      * @return
      */
     @RequestMapping(value = "/showGoods")
-    public String showGoods(@RequestParam(required = true,value = "goodId")Integer goodId, Model model){
-        Goods goods = goodsServer.queryGoodsById(goodId);
+    public String showGoods(@RequestParam(required = true,value = "goodsId")int goodsId, Model model){
+        Goods goods = goodsServer.queryGoodsById(goodsId);
         if (goods==null){
             return "404";
         }

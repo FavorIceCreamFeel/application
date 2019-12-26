@@ -170,28 +170,16 @@
 });
 </script>
 <script type="text/javascript">
-function shows(GoodsTypeId) {
-  $.ajax({
-    type:"post",
-    url:"http://localhost:8080/zero/getGoodsList",
-    data:{"phone":GoodsTypeId},
-    dataType:"json",
-    success:function (data) {
-      if (data==null||data.size()===0){
-        alert("数据加载失败！请刷新也页面");
-        return;
-      //  https://blog.csdn.net/weixin_39059334/article/details/78222740
-      }
-    }
-  });
+function showGoodsTypes(GoodsTypeId) {
+  if (GoodsTypeId!==null){
+    window.location.href="http://localhost:8080/zero/index?goodsTypeId="+GoodsTypeId;
+  }
 }
 function showGoods(GoodsId) {
-  $.ajax({
-    type:"post",
-    url:"http://localhost:8080//Goods/showGoods",
-    data:{"goodsId":GoodsId}
-
-  });}
+  if (GoodsId!==null){
+    window.location.href="http://localhost:8080/Goods/showGoods?goodsId="+GoodsId;
+  }
+  }
 </script>
 </body>
 </html>

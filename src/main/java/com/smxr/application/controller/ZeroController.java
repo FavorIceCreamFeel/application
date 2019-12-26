@@ -72,11 +72,17 @@ public class ZeroController {
         HashMap<String, ArrayList<GoodsType>> stringArrayListHashMap = goodsTypeService.queryGoodsTypes();
         model.addAttribute("goodsTypeList",stringArrayListHashMap);
         logger.info("商品分类填充完成");
-        Object goodsId = request.getAttribute("goodsId");
-        if (goodsId==null){
-            goodsId=1;
+        String goodsTypeId = request.getQueryString();
+        int i;
+        if (goodsTypeId==null){
+            logger.info("获取默认分类商品="+1);
+            i=1;
+        }else {
+            String substring = goodsTypeId.substring(goodsTypeId.lastIndexOf("=") + 1);
+            i=Integer.parseInt(substring);
+            logger.info("获取分类商品="+i);
         }
-        List<Goods> goods = goodsServer.selectGoodsByType((int)goodsId);
+        List<Goods> goods = goodsServer.selectGoodsByType(i);
         model.addAttribute("goodsList",goods);
         logger.info("商品填充完成");
         return "index";
