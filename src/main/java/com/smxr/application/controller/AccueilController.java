@@ -25,4 +25,10 @@ public class AccueilController {
     public AccueilDTO findAll() {
         return accueilService.findAll();
     }
+
+    @RequestMapping("/index")
+    @ApiOperation("后台首页")
+    public String index() {
+        return "manage/index";
+    }
 }
