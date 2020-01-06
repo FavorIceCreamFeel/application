@@ -11,7 +11,7 @@
 * +----------------------------------------------------------------------
 */
 'use strict';
-layui.use(['jquery','layer','element'],function(){
+layui.use(['layer','element'],function(){
 	window.jQuery = window.$ = layui.jquery;
 	window.layer = layui.layer;
   var element = layui.element();
@@ -22,8 +22,7 @@ $('.larry-side-menu').click(function() {
   if(sideWidth === 200) {
       $('#larry-body').animate({
         left: '0'
-      }); //admin-footer
-      $('#larry-footer').animate({
+      }); //admin-footer     $('#larry-footer').animate({
         left: '0'
       });
       $('#larry-side').animate({
@@ -74,58 +73,7 @@ $(function(){
         $('#time').html(h+":"+m+":"+s);
         t=setTimeout(function(){startTimer()},500);
    }
-   // 锁屏状态检测
-   function checkLockStatus(locked){
-        // 锁屏
-        if(locked == 1){
-        	$('.lock-screen').show();
-            $('#locker').show();
-            $('#layui_layout').hide();
-            $('#lock_password').val('');
-        }else{
-        	$('.lock-screen').hide();
-            $('#locker').hide();
-            $('#layui_layout').show();
-        }
-    }
 
-   checkLockStatus('0');
-   // 锁定屏幕
-   function lockSystem(){
-   		
-   	   var url = '';
-   	   $.post(
-   	   	   url,
-   	   	   function(data){
-   	   	   if(data=='1'){
-   	   	   	  checkLockStatus(1);
-   	   	   }else{
-              layer.alert('锁屏失败，请稍后再试！');
-   	   	   }
-   	   });
-   	   startTimer();
-   }
-   //解锁屏幕
-   function unlockSystem(){
-        // 与后台交互代码已移除，根据需求定义或删除此功能
-        
-   	    checkLockStatus(0);
-    }
-   // 点击锁屏
-   $('#lock').click(function(){
-   	    lockSystem();
-   });
-   // 解锁进入系统
-   $('#unlock').click(function(){
-        unlockSystem();
-   });
-   // 监控lock_password 键盘事件
-   $('#lock_password').keypress(function(e){
-        var key = e.which;
-        if (key == 13) {
-            unlockSystem();
-        }
-    });
     
 });
 
