@@ -16,7 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="../../static/css/personal.css" media="all" th:href="@{/css/personal.css}">
 </head>
 <body>
-<section class="layui-larry-box">
+<div th:include="manage/index" ></div>
+<section class="layui-larry-box" style="bottom: 0;border-left: solid 2px #2299ee; margin-top: 50px;margin-left: 250px;">
 	<div class="larry-personal">
 		<header class="larry-personal-tit">
 			<span>修改密码</span>

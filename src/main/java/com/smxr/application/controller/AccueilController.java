@@ -26,9 +26,24 @@ public class AccueilController {
         return accueilService.findAll();
     }
 
-    @RequestMapping("/index1")
+    @RequestMapping("/index")
     @ApiOperation("后台首页")
     public String index() {
         return "manage/main";
+    }
+    @RequestMapping("/upUser")
+    @ApiOperation("密码修改")
+    public String upUser() {
+        return "manage/changepwd";
+    }
+    @RequestMapping("/showUser")
+    @ApiOperation("个人信息")
+    public String showUser() {
+        return "manage/personInfo";
+    }
+    @RequestMapping("/showOrder")
+    @ApiOperation("订单列表")
+    public String showOrder() {
+        return "manage/table";
     }
 }
