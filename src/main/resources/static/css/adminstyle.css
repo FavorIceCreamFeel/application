@@ -17,7 +17,7 @@
 	color: #999;
 	padding-left: 15px;
 	padding-right: 15px;
-	position: relative;
+	position: relative
 }
 .header-demo .layui-nav .layui-nav-item:hover{
 	border-bottom-color: #000;

@@ -31,16 +31,7 @@ public class AccueilController {
     public String index() {
         return "manage/main";
     }
-    @RequestMapping("/upUser")
-    @ApiOperation("密码修改")
-    public String upUser() {
-        return "manage/changepwd";
-    }
-    @RequestMapping("/showUser")
-    @ApiOperation("个人信息")
-    public String showUser() {
-        return "manage/personInfo";
-    }
+
     @RequestMapping("/showOrder")
     @ApiOperation("订单列表")
     public String showOrder() {

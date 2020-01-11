@@ -5,7 +5,7 @@ import com.smxr.application.pojo.Orders;
 
 import java.util.List;
 
-public interface GoodsServer {
+public interface GoodsService {
 
     List<Goods> findAll();
     List<Orders> findAllOrder();

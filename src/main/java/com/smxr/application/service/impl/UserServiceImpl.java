@@ -2,7 +2,7 @@ package com.smxr.application.service.impl;
 
 import com.smxr.application.dao.UserDao;
 import com.smxr.application.pojo.User;
-import com.smxr.application.service.UserServer;
+import com.smxr.application.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,8 @@ import java.util.List;
  * @time 1:38
  */
 @Service
-public class UserServerImpl implements UserServer {
-    public static Logger logger=LoggerFactory.getLogger(UserServerImpl.class);
+public class UserServiceImpl implements UserService {
+    public static Logger logger=LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserDao userDao;
     @Autowired

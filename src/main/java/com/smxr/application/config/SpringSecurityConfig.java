@@ -1,8 +1,7 @@
 package com.smxr.application.config;
 
-import com.smxr.application.service.UserServer;
+import com.smxr.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +14,6 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author smxr
@@ -30,7 +28,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SessionRegistry sessionRegistry;
     @Autowired
-    private UserServer userServer;
+    private UserService userServer;
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher(){return new HttpSessionEventPublisher();}
     @Bean
@@ -65,8 +63,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/zero/login")
                 .and()
-//                .rememberMe().rememberMeParameter("remebe")
-////                .and()
+                .rememberMe().rememberMeParameter("remember")
+                .and()
                 .exceptionHandling().accessDeniedPage("/zero/err")
                 .and()
                 .csrf().disable()

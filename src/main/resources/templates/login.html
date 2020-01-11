@@ -37,6 +37,11 @@
                 <input type="password" name="password" id="password" lay-verify="required|phone" placeholder="请输入密码" autocomplete="off" class="layui-input ">
               </div>
             </div>
+            <div class="layui-inline checkbox" style="display: none">
+              <div class="layui-input-inline">
+                <input name="remember" type="checkbox" value="checkbox" checked="checked" />
+              </div>
+            </div>
           </div>
           <div class="layui-form-item login-btn" th:if="${#strings.isEmpty(signUp)}">
             <div class="layui-input-block">
@@ -49,6 +54,8 @@
               class="signUp" onclick="signUp()" th:onclick="'javascript:signUp('+${addUser}+')'"  value="注册"/>
             </div>
           </div>
+
+
         </form>
       </div>
     </div>

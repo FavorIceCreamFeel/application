@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @date 2019/11/24
  * @time 1:37
  */
-public interface UserServer extends UserDetailsService {
+public interface UserService extends UserDetailsService {
     public boolean insertUser(User user);
     public boolean updateUser(User user);
     public boolean selectUserByPhoneNumber(String phoneNumber);

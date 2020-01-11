@@ -4,16 +4,15 @@ import com.smxr.application.pojo.Goods;
 import com.smxr.application.pojo.GoodsType;
 import com.smxr.application.pojo.PhoneCode;
 import com.smxr.application.pojo.User;
-import com.smxr.application.service.GoodsServer;
+import com.smxr.application.service.GoodsService;
 import com.smxr.application.service.GoodsTypeService;
-import com.smxr.application.service.UserServer;
+import com.smxr.application.service.UserService;
 import com.smxr.application.utils.ApplicationUtils;
 import com.smxr.application.utils.ApplicationUtilsOne;
 import com.smxr.application.utils.CCPRestSDK;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -37,7 +35,7 @@ import java.util.*;
 public class ZeroController {
     private static Logger logger=LoggerFactory.getLogger(ZeroController.class);
     @Autowired
-    private UserServer userServer;
+    private UserService userServer;
     @Autowired
     private PhoneCode phoneCode;
     @Autowired
@@ -45,7 +43,7 @@ public class ZeroController {
     @Autowired
     private GoodsTypeService goodsTypeService;
     @Autowired
-    private GoodsServer goodsServer;
+    private GoodsService goodsServer;
     /**
      * 登录成功后跳转到首页
      * @return

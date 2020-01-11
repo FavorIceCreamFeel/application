@@ -271,7 +271,7 @@ a cite {
 }
 
 .layui-side {
-	position: fixed;
+	/*position: fixed;*/
 	top: 0;
 	bottom: 0;
 	z-index: 999;
@@ -1549,11 +1549,11 @@ a cite {
 .layui-nav-tree .layui-nav-item {
 	display: block;
 	width: 100%;
-	line-height: 45px
+	line-height: 50px
 }
 
 .layui-nav-tree .layui-nav-item a {
-	height: 45px;
+	height: 50px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap
@@ -2305,7 +2305,7 @@ button, input, optgroup, option, select, textarea {
 #page{ text-align:right; }
 
 .layui-form-item {
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
     clear: both;
     *zoom: 1;
 }
