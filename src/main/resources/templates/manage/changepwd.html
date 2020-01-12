@@ -17,35 +17,35 @@
 </head>
 <body>
 <div th:include="manage/index" ></div>
-<section class="layui-larry-box" style="bottom: 0;border-left: solid 2px #2299ee; margin-top: -370px;margin-left: 212px;">
+<section class="layui-larry-box" style="bottom: 0;margin-left: 212px;">
 	<div class="larry-personal">
 		<header class="larry-personal-tit">
 			<span>修改密码</span>
 		</header><!-- /header -->
 		<div class="larry-personal-body clearfix changepwd">
-			<form class="layui-form col-lg-4" method="post" action="">
+			<form class="layui-form col-lg-4" method="post" action="/user/updateUserPwd">
 			 	<div class="layui-form-item">
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-block">  
-					  	<input type="text" name="title"  autocomplete="off"  class="layui-input layui-disabled" value="admin" disabled="disabled" >
+					  	<input type="text" name="userName"  autocomplete="off"  class="layui-input" th:value="${userName}" disabled="disabled" >
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">旧密码</label>
 					<div class="layui-input-block">  
-					  	<input type="password" name="title"  autocomplete="off"  class="layui-input" value="" placeholder="请输入旧密码">
+					  	<input type="password" name="passwordOld"  autocomplete="off"  class="layui-input" value="" placeholder="请输入旧密码">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">新密码</label>
 					<div class="layui-input-block">  
-					  	<input type="password" name="title"  autocomplete="off"  class="layui-input" value="" placeholder="请输入新密码">
+					  	<input type="password" name="passwordOne"  autocomplete="off"  class="layui-input" value="" placeholder="请输入新密码">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">确认密码</label>
 					<div class="layui-input-block">  
-					  	<input type="password" name="title"  autocomplete="off"  class="layui-input" value="" placeholder="请输入确认新密码">
+					  	<input type="password" name="passwordTwo"  autocomplete="off"  class="layui-input" value="" placeholder="请输入确认新密码">
 					</div>
 				</div>
 				<div class="layui-form-item change-submit">

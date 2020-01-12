@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean insertUser(User user) {
         logger.info("开始添加用户："+user);
@@ -81,15 +83,17 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateUser(User user) {
         logger.info("开始修改用户："+user);
         if (user==null)
             return false;
-        String userPwd = user.getUserPwd();
-        String encode = passwordEncoder.encode(userPwd);
-        user.setUserPwd(encode);
-        boolean boo = userDao.updateUser(user);
+//        String userPwd = user.getUserPwd();
+//        String encode = passwordEncoder.encode(userPwd);
+//        user.setUserPwd(encode);
+
+        boolean boo = userDao.updateUserInfo(user);
         if (boo) {
             logger.info("修改用户成功：" + user);
             return boo;
@@ -136,9 +140,26 @@ public class UserServiceImpl implements UserService {
             if (!matches) {
                 logger.info("原始密码错误，请重试");
                 return "原始密码错误，请重试";
-            }
+            }else {
             return userPwd;
+            }
         }
     }
 
+    /**
+     * 校验原密码并且修改新密码
+     * @param passwordOld
+     * @param passwordOne
+     * @param passwordTwo
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateUserPwd(String phoneNumber,String passwordOld, String passwordOne,String passwordTwo) {
+        String userPwd = findUserPwd(phoneNumber, passwordOld);
+        if (userPwd.equals(passwordOld))
+            if (passwordOne.equals(passwordTwo))
+                return userDao.updateUser(passwordEncoder.encode(passwordOne), phoneNumber);
+        return false;
+    }
 }

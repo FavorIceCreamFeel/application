@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -32,13 +33,17 @@ public class UserController {
 
     /**
      * 修该用户信息
-     * @param user
+     * @param
      * @return
      */
+//    public boolean updateUser(@RequestParam String phoneNumber,String userName,String userAge,String userSex,String address){
     @RequestMapping("/updateUser")
-    public boolean updateUser(User user){
+    public String updateUser(User user){
+        logger.info("用户修改信息："+user.toString());
         boolean boo = userServer.updateUser(user);
-        return boo;
+        logger.info("修改结果："+boo);
+        if (!boo){return "404";}
+        return "redirect:/user/showUser";
     }
 
     /**
@@ -58,7 +63,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/showUser")
-    @ApiOperation("个人信息")
+    @ApiOperation("个人信息展示")
     public String showUser(Model model) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();//这个name是手机号
         logger.info("进入个人信息页面:"+name);
@@ -82,12 +87,30 @@ public class UserController {
     }
 
     /**
-     * 修改个人信息
+     * 修改个人密码
      * @return
      */
     @RequestMapping("/upUser")
-    @ApiOperation("密码修改")
-    public String upUser() {
+    @ApiOperation("密码修改展示")
+    public String upUserShow(HttpServletRequest request,Model model) {
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();//这个name是手机号
+        logger.info("进入修改密码页面:"+name);
+        if (name==null||name.equals("")){return "404";}
+        Object userName = request.getSession().getAttribute("userName");
+        if (userName==null){userName=name;}
+        model.addAttribute("userName", userName);
         return "manage/changepwd";
+    }
+    @RequestMapping("/updateUserPwd")
+    @ApiOperation("密码修改接口")
+    public String updateUser(@RequestParam String passwordOld,@RequestParam String passwordOne,@RequestParam String passwordTwo){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();//这个name是手机号
+        if (name==null||name.equals("")){return "404";}
+        boolean boo = userServer.updateUserPwd(name, passwordOld, passwordOne, passwordTwo);
+        if (boo){
+            return "redirect:/accueil/index";
+        }else {
+            return "404";
+        }
     }
 }

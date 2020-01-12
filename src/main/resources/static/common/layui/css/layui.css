@@ -271,7 +271,7 @@ a cite {
 }
 
 .layui-side {
-	/*position: fixed;*/
+	position: absolute;
 	top: 0;
 	bottom: 0;
 	z-index: 999;
@@ -305,7 +305,7 @@ a cite {
 }
 
 .layui-layout-admin .layui-side {
-	top: 52px;
+	/*top: 52px;修改固定定位为相对定位*/
 	width: 200px;
 	overflow-x: hidden
 }
