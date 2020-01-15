@@ -1088,8 +1088,8 @@ a cite {
 .layui-table td,
 .layui-table th {
 	padding: 9px 15px;
-	min-height: 20px;
-	line-height: 20px;
+	min-height: 25px;
+	line-height: 25px;
 	border: 1px solid #e2e2e2;
 	font-size: 14px
 }

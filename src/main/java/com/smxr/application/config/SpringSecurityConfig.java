@@ -57,18 +57,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        super.configure(http);
         http.authorizeRequests()
                 .antMatchers("/favicon.ico","/zero/**","/addOrder/shows").permitAll()
-                .antMatchers("/user","/").hasAuthority("SSR")
+                .antMatchers("/user/**","/").hasAuthority("SSR")
+                .antMatchers("/role/**").hasAuthority("Role")
                 .and()
                 .formLogin().loginPage("/zero/login").successForwardUrl("/zero/index").failureForwardUrl("/zero/reLogin")
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/zero/login")
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/zero/login").invalidateHttpSession(true).deleteCookies("JESSIONID")
                 .and()
                 .rememberMe().rememberMeParameter("remember")
                 .and()
                 .exceptionHandling().accessDeniedPage("/zero/err")
                 .and()
-                .csrf().disable()
-                .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry).expiredUrl("/zero/login");
+                .csrf().disable();
+
+        http
+                .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry).expiredUrl("/zero/login")
+                .and()
+                .invalidSessionUrl("/zero/index");//session失效后跳转
+//                .maximumSessions(1).maxSessionsPreventsLogin(true);
     }
 
 }

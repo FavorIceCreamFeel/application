@@ -18,7 +18,7 @@
         <a href="http://localhost:8080/zero/index">首页</a>
       </p>
       <div class="sn-quick-menu">
-            <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'#':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${userName}?${userName}:'登录'">登录</a></div>
+            <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'#':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${session.userName}?${session.userName}:'登录'">登录</a></div>
             <div class="sp-cart"><a href="/order/shows">购物车</a></div>
             <div class="sp-cart" style="margin-left: 20px"  th:unless="${#strings.isEmpty(power)}"><a href="http://localhost:8080/accueil/index">后台管理</a></div>
           <div class="sp-cart" style="margin-left: 20px"><a href="http://localhost:8080/logout">退出</a></div>

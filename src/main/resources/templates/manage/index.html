@@ -1,5 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
 	<title>后台管理</title>
@@ -31,7 +32,7 @@
             <!-- 右侧导航 -->
             <ul class="layui-nav larry-header-item">
             		<li class="layui-nav-item">
-            			账户名：<span>XXXXXXX</span>
+            			账户名：<span th:text="${session.userName}">XXXXXXX</span>
             		</li>
 					<li class="layui-nav-item">
 						<a href="http://localhost:8080/logout">
@@ -110,7 +111,7 @@
 				</li>
 
 			<!-- 权限管理 -->
-			<li class="layui-nav-item">
+			<li class="layui-nav-item" th:if="${session.Role}">
 				<a href="javascript:;">
 					<i class="iconfont icon-m-members" ></i>
 					<span>权限管理</span>
@@ -118,19 +119,19 @@
 				</a>
 				<dl class="layui-nav-child">
 					<dd>
-						<a href="javascript:;">
-							<i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>
-							<span>权限列表</span>
-						</a>
-					</dd>
-					<dd>
-						<a href="javascript:;" >
+						<a href="http://localhost:8080/role/showRole">
 							<i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>
 							<span>角色列表</span>
 						</a>
 					</dd>
 					<dd>
-						<a href="javascript:;" >
+						<a href="http://localhost:8080/role/showPower">
+							<i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>
+							<span>权限列表</span>
+						</a>
+					</dd>
+					<dd>
+						<a href="http://localhost:8080/role/showRole">
 							<i class="iconfont icon-zhuti"  data-icon='icon-zhuti'></i>
 							<span>权限配置</span>
 						</a>

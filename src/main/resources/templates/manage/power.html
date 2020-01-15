@@ -1,0 +1,110 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>角色权限</title>
+	<meta name="renderer" content="webkit">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta name="apple-mobile-web-app-capable" content="yes">	
+	<meta name="format-detection" content="telephone=no">
+
+
+	<link rel="stylesheet" type="text/css" href="../../static/common/layui/css/layui.css" media="all" th:href="@{/common/layui/css/layui.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/bootstrap/css/bootstrap.css" media="all" th:href="@{/common/bootstrap/css/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/global.css" media="all" th:href="@{/common/global.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/css/personal.css" media="all" th:href="@{/css/personal.css}">
+</head>
+<body>
+<div th:include="manage/index"></div>
+<!--layui-larry-box 调节列表的宽度-->
+<section class="layui-larry-box" style="bottom: 0;margin-left: 212px;">
+	<div class="larry-personal">
+	    <div class="layui-tab">
+            <blockquote class="layui-elem-quote news_search">
+
+	</blockquote>
+            
+		         <!-- 操作日志 -->
+                <div class="layui-form news_list">
+                    <table class="layui-table">
+					    <colgroup>
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>角色ID</th>
+							<th>角色名字</th>
+							<th>角色描述</th>
+							<th>角色状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody class="news_content">
+						<tr th:each="role : ${roleList}">
+							<td th:text="${role.getRoleId()}">1</td>
+							<td th:text="${role.getRoleName()}">root</td>
+							<td th:text="${role.getRoleDescribe()}">管理账号</td>
+							<td th:text="${role.getRoleStatus()}==1?'启用':'禁用'">启用</td>
+							<td>
+								<a class="layui-btn layui-btn-normal layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>编辑角色状态</a>
+								<a class="layui-btn layui-btn-danger layui-btn-mini"><i class="iconfont icon-edit"></i>查看权限字段</a>
+							</td>
+						</tr>
+					</tbody>
+					</table>
+			    </div>
+		    </div>
+		</div>
+	
+</section>
+<script type="text/javascript" src="../../static/common/layui/layui.js" th:src="@{common/layui/layui.js}"></script>
+<script type="text/javascript" src="../../static/js/newslist.js" th:src="@{js/newslist.js}"></script>
+<script type="text/javascript">
+	layui.use(['jquery','layer','element','laypage'],function(){
+	      window.jQuery = window.$ = layui.jquery;
+	      window.layer = layui.layer;
+          var element = layui.element(),
+              laypage = layui.laypage;
+
+            
+          laypage({
+					cont: 'page',
+					pages: 10 //总页数
+						,
+					groups: 5 //连续显示分页数
+						,
+					jump: function(obj, first) {
+						//得到了当前页，用于向服务端请求对应数据
+						var curr = obj.curr;
+						if(!first) {
+							//layer.msg('第 '+ obj.curr +' 页');
+						}
+					}
+				});
+
+          laypage({
+					cont: 'page2',
+					pages: 10 //总页数
+						,
+					groups: 5 //连续显示分页数
+						,
+					jump: function(obj, first) {
+						//得到了当前页，用于向服务端请求对应数据
+						var curr = obj.curr;
+						if(!first) {
+							//layer.msg('第 '+ obj.curr +' 页');
+						}
+					}
+				});
+    });
+</script>
+</body>
+</html>

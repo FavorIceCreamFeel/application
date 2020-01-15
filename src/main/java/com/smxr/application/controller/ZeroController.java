@@ -90,6 +90,7 @@ public class ZeroController {
         if (signUp.equals("signUp")){
             return "login";
         }
+        logger.info("测试===================首次加载=================转发：zero/index");
         return "redirect:/zero/index";
     }
     @RequestMapping("/reLogin")
