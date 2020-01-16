@@ -3,6 +3,7 @@ package com.smxr.application.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author smxr
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
  * @time 14:22
  */
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Power {

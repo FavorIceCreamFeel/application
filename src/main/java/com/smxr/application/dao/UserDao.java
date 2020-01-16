@@ -24,6 +24,12 @@ public interface UserDao {
      */
     @Select("select *from user where phoneNumber=#{param}")
     public User queryUserByPhoneNum(String phoneNum);
+
+    /**
+     * 查找权限字段By--->userId
+     * @param param1
+     * @return
+     */
     @Select("select powerSign from power where" +
             " powerId in (select distinct powerId from role_power where" +
             " roleId in (select roleId from userid_roleid where userId=#{param1}))")

@@ -16,4 +16,6 @@ public interface RoleService {
     public List<Role> queryRoleAll();
     public List<Power> queryPowerAll();
     public List<Power> queryPowerByRoleId(int roleId);
+    public boolean insertRole(Role role,int[] power);
+    public boolean updateRole(Role role);
 }

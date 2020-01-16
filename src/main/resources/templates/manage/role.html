@@ -24,7 +24,7 @@
 	    <div class="layui-tab">
             <blockquote class="layui-elem-quote news_search">
 				<div class="layui-inline" th:if="${Role}==1">
-					<a href="" class="layui-btn audit_btn">创建角色</a>
+					<a href="http://localhost:8080/role/showInsertRole" class="layui-btn audit_btn">创建角色</a>
 				</div>
 	</blockquote>
             
@@ -56,8 +56,8 @@
 							<td th:text="${role.getRoleDescribe()}">管理账号</td>
 							<td th:text="${role.getRoleStatus()}==1?'启用':'禁用'">启用</td>
 							<td>
-								<a class="layui-btn layui-btn-normal layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>编辑角色状态</a>
-								<a class="layui-btn layui-btn-danger layui-btn-mini"><i class="iconfont icon-edit"></i>查看权限字段</a>
+								<a th:onclick="'javascript:updateRoleStatus('+${role.getRoleStatus()}+','+${role.getRoleId()}+')'" class="layui-btn layui-btn-normal layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>编辑角色状态</a>
+								<a th:onclick="'javascript:showPower('+${role.getRoleId()}+')'" class="layui-btn layui-btn-danger layui-btn-mini"><i class="iconfont icon-edit"></i>查看权限字段</a>
 							</td>
 						</tr>
 					</tbody>
@@ -75,8 +75,30 @@
 		</div>
 	
 </section>
-<script type="text/javascript" src="../../static/common/layui/layui.js" th:src="@{common/layui/layui.js}"></script>
-<script type="text/javascript" src="../../static/js/newslist.js" th:src="@{js/newslist.js}"></script>
+<script type="text/javascript" src="../../static/js/newslist.js" th:src="@{/js/newslist.js}"></script>
+<script type="text/javascript">
+	/*查看权限字段函数*/
+	function showPower(PowerId) {
+		if (PowerId!==null){
+			window.location.href="http://localhost:8080/role/showPower?roleId="+PowerId;
+		}
+	}
+	/*状态修改函数*/
+	function updateRoleStatus(roleStatus,roleId) {
+		if (roleStatus===1){
+			var boo = confirm("确定修改状态为：禁用");
+			if (boo){
+			window.location.href="http://localhost:8080/role/updateRoleStatus?roleStatus=0&roleId="+roleId;
+			}
+		}
+		if (roleStatus===0){
+			var bo = confirm("确定修改状态为：启用");
+			if (bo){
+				window.location.href="http://localhost:8080/role/updateRoleStatus?roleStatus=1&roleId="+roleId;
+			}
+		}
+	}
+</script>
 <script type="text/javascript">
 	layui.use(['jquery','layer','element','laypage'],function(){
 	      window.jQuery = window.$ = layui.jquery;

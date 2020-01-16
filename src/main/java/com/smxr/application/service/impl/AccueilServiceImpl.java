@@ -8,6 +8,7 @@ import com.smxr.application.pojo.User;
 import com.smxr.application.service.AccueilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author ZhangRongFei
@@ -19,6 +20,7 @@ public class AccueilServiceImpl implements AccueilService {
     private UserDao userDao;
     @Autowired
     private OrdersDao ordersDao;
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public AccueilDTO findAll() {
         Integer userNum = userDao.userNum();

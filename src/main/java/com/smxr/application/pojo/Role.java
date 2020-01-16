@@ -15,6 +15,11 @@ public class Role {
     public Role() {
     }
 
+    public Role(int roleId, int roleStatus) {
+        this.roleId = roleId;
+        this.roleStatus = roleStatus;
+    }
+
     public Role(int roleId, String roleName, String roleDescribe, int roleStatus) {
         this.roleId = roleId;
         this.roleName = roleName;
@@ -52,5 +57,15 @@ public class Role {
 
     public void setRoleStatus(int roleStatus) {
         this.roleStatus = roleStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                ", roleDescribe='" + roleDescribe + '\'' +
+                ", roleStatus=" + roleStatus +
+                '}';
     }
 }

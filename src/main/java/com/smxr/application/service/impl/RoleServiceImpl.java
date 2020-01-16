@@ -4,8 +4,10 @@ import com.smxr.application.dao.RoleDao;
 import com.smxr.application.pojo.Power;
 import com.smxr.application.pojo.Role;
 import com.smxr.application.service.RoleService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
  * @date 2020/1/11
  * @time 16:35
  */
+@Log
 @Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
@@ -53,4 +56,40 @@ public class RoleServiceImpl implements RoleService {
     public List<Power> queryPowerByRoleId(int roleId) {
         return roleDao.selectPowerByRoleId(roleId);
     }
+
+    /**
+     * 创建Role
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean insertRole(Role role,int[] power) {
+        if (roleDao.insertRole(role)){
+            log.info("创建角色："+role.toString());
+            if (role.getRoleName()!=null && !role.getRoleName().equals("")) {
+                Role role1 = roleDao.selectRoleByRoleName(role.getRoleName());
+                for (int i : power) {
+                    log.info("关联权限："+role.getRoleName()+"==========>>"+i);
+                    if (!roleDao.insertrole_power(role1.getRoleId(),i))
+                        return false;
+                }
+                log.info("创建完成：true");
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    /**
+     * 修改Role
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateRole(Role role) {
+        return roleDao.updateRole(role);
+    }
+
+
 }
