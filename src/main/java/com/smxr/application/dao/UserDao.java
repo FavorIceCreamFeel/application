@@ -32,7 +32,8 @@ public interface UserDao {
      */
     @Select("select powerSign from power where" +
             " powerId in (select distinct powerId from role_power where" +
-            " roleId in (select roleId from userid_roleid where userId=#{param1}))")
+            " roleId in (select role.roleId from userid_roleid inner join role on userid_roleid.roleId=role.roleId" +
+            " where userId=#{param1} and role.roleStatus !='0' ))")
     public List<String> queryPowerStringByPhoneNum(long param1);
     @Insert("insert into user values(#{userName},#{userPwd},#{userSex},#{userAge},#{phoneNumber},#{address},#{createTime})")
     public boolean insertUser(User user);
