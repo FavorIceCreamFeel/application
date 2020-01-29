@@ -42,6 +42,8 @@
 					</colgroup>
 					<thead>
 						<tr>
+
+
 							<th><span th:text="${roles}"></span>ID</th>
 							<th><span th:text="${roles}"></span>名字</th>
 							<th><span th:text="${roles}"></span>描述</th>
@@ -70,6 +72,15 @@
 						</tr>
 					</tbody>
 					</table>
+					<div class="larry-table-page clearfix" th:if="${Role}==1">
+						<div id="page" class="page">
+							<a class="allpage"><b th:text="'共 '+ ${PageInfo.total}+ ' 条/'"></b></a>
+							<a class="allpage"><b th:text="'共 '+ ${PageInfo.pages}+ ' 页'"></b></a>&nbsp;&nbsp;
+							<a th:onclick="'javascript:pageInfo('+${PageInfo.prePage}+')'" th:if="${PageInfo.hasPreviousPage} == true">上一页</a>
+							<a th:each="i : ${PageInfo.navigatepageNums}" th:onclick="'javascript:pageInfo('+${i}+')'" ><span class="layui-laypage-curr layui-laypage-em" th:text="${i}"></span>&nbsp;&nbsp;</a>&nbsp;&nbsp;
+							<a th:onclick="'javascript:pageInfo('+${PageInfo.nextPage}+')'"  th:if="${PageInfo.hasNextPage} == true">下一页</a>
+						</div>
+					</div>
 			    </div>
 		    </div>
 		</div>
@@ -98,6 +109,11 @@
 			}
 		}
 	}
+	<!--分页-->
+	function pageInfo(pageNumber) {
+		window.location.href="http://localhost:8080/role/showRole?pageNumber="+pageNumber;
+		// window.location.href="http://localhost:8080/accueil/showUserList?pageSize="+pageSize+"&pageNumber="+pageNumber;
+	}
 </script>
 <script type="text/javascript">
 	layui.use(['jquery','layer','element','laypage'],function(){
@@ -105,37 +121,6 @@
 	      window.layer = layui.layer;
           var element = layui.element(),
               laypage = layui.laypage;
-
-            
-          laypage({
-					cont: 'page',
-					pages: 10 //总页数
-						,
-					groups: 5 //连续显示分页数
-						,
-					jump: function(obj, first) {
-						//得到了当前页，用于向服务端请求对应数据
-						var curr = obj.curr;
-						if(!first) {
-							//layer.msg('第 '+ obj.curr +' 页');
-						}
-					}
-				});
-
-          laypage({
-					cont: 'page2',
-					pages: 10 //总页数
-						,
-					groups: 5 //连续显示分页数
-						,
-					jump: function(obj, first) {
-						//得到了当前页，用于向服务端请求对应数据
-						var curr = obj.curr;
-						if(!first) {
-							//layer.msg('第 '+ obj.curr +' 页');
-						}
-					}
-				});
     });
 </script>
 </body>

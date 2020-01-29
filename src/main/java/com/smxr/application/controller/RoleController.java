@@ -1,5 +1,6 @@
 package com.smxr.application.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.smxr.application.pojo.Power;
 import com.smxr.application.pojo.Role;
 import com.smxr.application.service.RoleService;
@@ -18,6 +19,8 @@ import java.util.List;
  * @author smxr
  * @date 2020/1/15
  * @time 11:01
+ * BUG--->
+ * 1.创建角色名重复----》报错   未修改
  */
 @Log
 @Controller
@@ -28,15 +31,22 @@ public class RoleController {
 
     @RequestMapping("/showRole")
     @ApiOperation("角色列表")
-    public String showRole(Model model) {
-        List<Role> roles = roleService.queryRoleAll();
-        if (roles==null){
-            return "404";
+    public String showRole(@RequestParam(required = false,value = "pageSize",defaultValue = "5") Integer pageSize,
+                           @RequestParam(required = false,value = "pageNumber",defaultValue ="1") Integer pageNumber,
+                           Model model) {
+        if (pageSize<5){
+            pageSize=5;
         }
-        model.addAttribute("roleList",roles);
+        if (pageNumber<1){
+            pageNumber=1;
+        }
+//        List<Role> roles = roleService.queryRoleAll();
+        PageInfo<Role> rolePageInfo = roleService.queryRolePageInfo(pageSize, pageNumber);
+        model.addAttribute("roleList",rolePageInfo.getList());
+        model.addAttribute("PageInfo",rolePageInfo);
         model.addAttribute("roles","角色");
         model.addAttribute("Role",1);
-        log.info("获取角色列表："+roles.toString());
+        log.info("获取角色列表："+rolePageInfo.getList().toString());
         return "manage/role";
     }
 

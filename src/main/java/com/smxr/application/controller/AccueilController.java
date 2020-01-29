@@ -1,6 +1,8 @@
 package com.smxr.application.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.smxr.application.dto.AccueilDTO;
+import com.smxr.application.pojo.User;
 import com.smxr.application.service.AccueilService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
@@ -11,11 +13,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author ZhangRongFei
@@ -63,9 +67,33 @@ public class AccueilController {
         return "manage/main";
     }
 
-    @RequestMapping("/showOrder")
-    @ApiOperation("订单列表")
-    public String showOrder() {
-        return "manage/table";
+//    @RequestMapping("/showOrder")
+//    @ApiOperation("订单列表")
+//    public String showOrder() {
+//        return "user_table";
+//    }
+
+    /**
+     * 展示用户列表
+     * @return
+     */
+    @RequestMapping("/showUserList")
+    @ApiOperation("展示用户列表视图跳转")
+    public String showUserList(@RequestParam(required = false,value = "pageSize",defaultValue = "10") Integer pageSize,
+                               @RequestParam(required = false,value = "pageNumber",defaultValue ="1") Integer pageNumber,
+                               Model model){
+        if (pageSize<10){
+            pageSize=10;
+        }
+        if (pageNumber<1){
+            pageNumber=1;
+        }
+        PageInfo<User> userPageInfo = accueilService.showUserPage(pageSize, pageNumber);
+        List<User> list = userPageInfo.getList();
+        log.info("第"+pageNumber+"页，共"+pageSize+"用户");
+        log.info(userPageInfo.toString());
+        model.addAttribute("PageInfo",userPageInfo);
+        model.addAttribute("userList",list);
+        return "manage/user_table";
     }
 }

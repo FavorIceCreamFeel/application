@@ -17,6 +17,8 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserDao {
+    @Select("select *from user")
+    public List<User> findUserAll();
     /**
      * 查询用户byPhoneNum
      * @param phoneNum

@@ -1,6 +1,10 @@
 package com.smxr.application.service;
 
+import com.github.pagehelper.PageInfo;
 import com.smxr.application.dto.AccueilDTO;
+import com.smxr.application.pojo.User;
+
+import java.util.List;
 
 /**
  * @author ZhangRongFei
@@ -8,4 +12,5 @@ import com.smxr.application.dto.AccueilDTO;
  */
 public interface AccueilService {
     public AccueilDTO findAll();
+    public PageInfo<User> showUserPage(int pageSize, int pageNumber);
 }

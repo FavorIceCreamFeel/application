@@ -1,5 +1,7 @@
 package com.smxr.application.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.smxr.application.dao.RoleDao;
 import com.smxr.application.pojo.Power;
 import com.smxr.application.pojo.Role;
@@ -40,6 +42,16 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> queryRoleAll() {
         return roleDao.selectRoleAll();
     }
+    /**
+    * 分页显示角色
+    */
+    @Override
+    public PageInfo<Role> queryRolePageInfo(int pageSize, int pageNumber) {
+        PageHelper.startPage(pageNumber,pageSize);
+        List<Role> roles = roleDao.selectRoleAll();
+        return new PageInfo<Role>(roles);
+    }
+
     /**
      * 查询所有资源字段
      * @return
