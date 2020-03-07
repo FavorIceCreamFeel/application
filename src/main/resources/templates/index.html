@@ -1,0 +1,190 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <link rel="stylesheet" type="text/css" href="../static/static/css/main.css" th:href="@{/static/css/main.css}">
+  <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+  <script type="text/javascript" src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      window.location.href="http://localhost:8080/zero/index";
+    });
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+  <div class="site-nav-bg">
+    <div class="site-nav w1200">
+      <p class="sn-back-home">
+        <i class="layui-icon layui-icon-home"></i>
+        <a href="http://localhost:8080/zero/index">首页</a>
+      </p>
+      <div class="sn-quick-menu">
+            <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'http://localhost:8080/user/show_User':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${session.userName}?${session.userName}:'登录'">登录</a></div>
+            <div class="sp-cart"><a href="/order/shows">购物车</a></div>
+            <div class="sp-cart" style="margin-left: 20px"  th:unless="${#strings.isEmpty(power)}"><a href="http://localhost:8080/accueil/index">后台管理</a></div>
+          <div class="sp-cart" style="margin-left: 20px"><a href="http://localhost:8080/logout">退出</a></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+
+        <div class="mallSearch">
+          <form action="" class="layui-form" novalidate>
+            <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+            <button class="layui-btn" style="" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+            <input type="hidden" name="" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="index.html" class="active" th:href="@{/index/goodList}">所有商品</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="commod-cont-wrap">
+      <div class="commod-cont w1200 layui-clear">
+        <div class="left-nav">
+          <div class="title">所有分类</div>
+          <div class="list-box">
+            <dl th:each="goodsTypeMap : ${goodsTypeList}">
+             <dt th:text="${goodsTypeMap.key}">xxxx</dt>
+             <dd th:each="goodsTypesList:${goodsTypeMap.value}">
+             <a href="#" th:onclick="'javascript:showGoodsTypes('+${goodsTypesList.getGoodsTypeId()}+')'" th:text="${goodsTypesList.getGoodsTypeName()}">xxxx</a>
+             </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="right-cont-wrap">
+          <div class="right-cont">
+            <div class="sort layui-clear">
+              <a class="active" href="javascript:;" event = 'volume'>销量</a>
+              <a href="javascript:;" event = 'price'>价格</a>
+              <a href="javascript:;" event = 'newprod'>新品</a>
+              <a href="javascript:;" event = 'collection'>收藏</a>
+            </div>
+            <div class="prod-number">
+              <span>200个</span>
+            </div>
+
+
+            <!-- 开始      -->
+            <div class="cont-list layui-clear" id="list-cont">
+              <tr th:each="list : ${goodsList}">
+            <!--    图片框     循环添加以下       -->
+               <div class="item">
+                <div class="img">
+                  <!--     图片路径             -->
+                  <a href="#" th:onclick="'javascript:showGoods('+${list.getGoodsId()}+')'"><img src="" th:src="${list.goodsUrl}" style="width: 100%;height: 100%"></a>
+                </div>
+                <div class="text">
+                  <!--      图片下面的文本 的标题            -->
+                  <p class="title"><td th:text="${list.goodsName}"></td></p>
+                  <p class="price">
+                    <!--图片下面的文本 的  左的价格  右边的人数      -->
+                    <span class="pri"><td th:text="${list.goodsMoney}"></td></span>
+                    <span class="nub" th:text="'剩余'+${list.getGoodsNum()}+'件'"></span>
+                  </p>
+                </div>
+               </div>
+             </tr>
+            </div>
+
+
+<!--               模版引擎导入 -->
+            <!-- <script type="text/html" id="demo">
+              {{# layui.each(d.menu.milk.content,function(index,item){}}
+                <div class="item">
+                  <div class="img">
+                    <a href="javascript:;"><img src="{{item.img}}"></a>
+                  </div>
+                  <div class="text">
+                    <p class="title"></p>
+                    <p class="price">
+                      <span class="pri">{{item.pri}}</span>
+                      <span class="nub">{{item.nub}}</span>
+                    </p>
+                  </div>
+                </div>
+              {{# }); }}
+            </script>-->
+            <div id="demo0" style="text-align: center;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script type="text/javascript" src="../static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script>
+  layui.config({
+    base:  '../static/js/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','laypage','jquery'],function(){
+      var laypage = layui.laypage,$ = layui.$,
+     mm = layui.mm;
+       laypage.render({
+        elem: 'demo0'
+        ,count: 100 //数据总数
+      });
+
+
+    // 模版引擎导入
+    //  var html = demo.innerHTML;
+    //  var listCont = document.getElementById('list-cont');
+    // mm.request({
+    //     url: '../json/commodity.json',
+    //     success : function(res){
+    //       listCont.innerHTML = mm.renderHtml(html,res)
+    //     },
+    //     error: function(res){
+    //       console.log(res);
+    //     }
+    //   });
+
+    $('.sort a').on('click',function(){
+      $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('.list-box dt').on('click',function(){
+      if($(this).attr('off')){
+        $(this).removeClass('active').siblings('dd').show()
+        $(this).attr('off','')
+      }else{
+        $(this).addClass('active').siblings('dd').hide()
+        $(this).attr('off',true)
+      }
+    })
+
+});
+</script>
+<script type="text/javascript">
+function showGoodsTypes(GoodsTypeId) {
+  if (GoodsTypeId!==null){
+    window.location.href="http://localhost:8080/zero/index?goodsTypeId="+GoodsTypeId;
+  }
+}
+function showGoods(GoodsId) {
+  if (GoodsId!==null){
+    window.location.href="http://localhost:8080/zero/showGoods?goodsId="+GoodsId;
+  }
+  }
+</script>
+</body>
+</html>

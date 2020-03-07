@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    active: dev #启用开发环境
+#    active: prod #启用正式环境
+  #文件上传与下载
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  thymeleaf:
+    cache: true
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    suffix: .html
+#分页助手
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+#logging:
+#  config:
+#    classpath: logback-spring.xml
+#配置短信验证信息
+phonecode:
+  AppID: 8a216da86cdb6950016d0458108b1cc1
+  account_SID: 8a216da86cdb6950016d0458103b1cba
+  auth_token: b38c7d477ea643a7a1f2643926f79482
+  API_URl: https://app.cloopen.com:8883
+  TemplateId: 1

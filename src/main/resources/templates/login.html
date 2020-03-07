@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  <link rel="stylesheet" type="text/css" href="../static/static/css/main.css" th:href="@{/static/css/main.css}">
+  <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+  <script type="text/javascript" src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+<div class="content content-nav-base  login-content">
+  <div class="login-bg">
+    <div class="login-cont w1200">
+      <div class="form-box">
+        <form class="layui-form" action="/zero/login" method="post">
+          <legend>手机号登录</legend>
+          <div class="layui-form-item">
+            <div class="layui-inline iphone">
+              <div class="layui-input-inline">
+                <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                <input type="tel" name="username" id="phone" lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input" required="required">
+              </div>
+            </div>
+              <!--注册时重新加载---显示-->
+            <div class="layui-inline veri-code" th:if="${not #strings.isEmpty(signUp)}">
+              <div class="layui-input-inline">
+                <input id="pnum" type="text" name="pnum" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                <input type="button" class="layui-btn" id="find"  value="验证码" />
+              </div>
+            </div>
+
+            <div class="layui-inline iphone" th:if="${#strings.isEmpty(signUp)}">
+              <div class="layui-input-inline" >
+                <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
+                <input type="password" name="password" id="password" lay-verify="required|phone" placeholder="请输入密码" autocomplete="off" class="layui-input " required="required">
+              </div>
+            </div>
+            <div class="layui-inline checkbox" style="display: none">
+              <div class="layui-input-inline">
+                <input name="remember" type="checkbox" checked="checked" />
+              </div>
+            </div>
+          </div>
+          <div class="layui-form-item login-btn" th:if="${#strings.isEmpty(signUp)}">
+            <div class="layui-input-block">
+              <button type="submit" class="layui-btn">登录</button>
+            </div>
+          </div>
+          <div class="layui-form-item login-btn">
+            <div class="layui-input-block">
+              <input type="button" style="width: 100%;background: #cfb2f6;font-size: 18px;height: 38px;line-height: 38px;padding: 0 18px;color: #fff;white-space: nowrap;text-align: center;border: none;border-radius: 2px;cursor: pointer;"
+              class="signUp" onclick="signUp()" th:onclick="'javascript:signUp('+${addUser}+')'"  value="注册"/>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="ng-promise-box">
+    <div class="ng-promise w1200">
+      <p class="text">
+        <a class="icon1" href="javascript:;">7天无理由退换货</a>
+        <a class="icon2" href="javascript:;">满99元全场免邮</a>
+        <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
+      </p>
+    </div>
+  </div>
+  <div class="mod_help w1200">
+    <p>
+      <a href="javascript:;">关于我们</a>
+      <span>|</span>
+      <a href="javascript:;">帮助中心</a>
+      <span>|</span>
+      <a href="javascript:;">售后服务</a>
+      <span>|</span>
+      <a href="javascript:;">商品资讯</a>
+      <span>|</span>
+      <a href="javascript:;">关于货源</a>
+    </p>
+    <p class="coty">smrx</p>
+    <!--店铺名字-->
+  </div>
+</div>
+<script type="text/javascript" src="../static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript">
+  layui.config({
+    base: '../static/static/js/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['jquery','form'],function(){
+    var $ = layui.$,form = layui.form;
+    $("#find").click(function() {
+      if(!/^1\d{10}$/.test($("#phone").val())){
+        layer.msg("请输入正确的手机号");
+        return false;
+      }
+      var phoneNum = $("input[name='username']").val();
+      var obj=this;
+      $.ajax({
+        type:"post",
+        url:"http://localhost:8080/zero/phoneCode",
+        data:{"phone":phoneNum},
+        dataType:"json",//返回的
+        success:function(data) {
+          if(data===true){
+            $("#find").addClass(" layui-btn-disabled");
+            $('#find').attr('disabled',"true");
+            settime(obj);
+            $("#msg").text(data.msg);
+          }else{
+            layer.msg("已注册！");
+          }
+        },
+        error:function(msg) {
+          console.log(msg);
+        }
+      });
+    });
+    var countdown=60;
+    function settime(obj) {
+      if (countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.classList.remove("layui-btn-disabled");
+        obj.value="获取验证码";
+        countdown = 60;
+        return;
+      } else {
+
+        obj.value="重新发送(" + countdown + ")";
+        countdown--;
+      }
+      setTimeout(function() {
+                settime(obj) }
+              ,1000)
+    }
+  });
+  /*
+  * 登陆账号密码验证
+  */
+  $(function(){
+    $(".layui-btn").click(function(){
+      var username=$("input[name='username']").val();
+      var password=$("input[name='password']").val();
+      var re = new RegExp(/^[a-zA-Z0-9]{6,8}$/);       // ^表示开始  $表示结束
+      if (!/^1\d{10}$/.test(username)){
+        alert("请输入正确手机号！");
+        return;
+      }
+      // if (!re.test(password)){
+      //   alert("密码必须为数字或字母，只能为6~8位！");
+      //   return;
+      // }
+      // location.href="index.";
+    });
+  });
+
+
+  /**
+   * 注册使用函数ok
+   * @param addUser
+   */
+  function signUp(addUser) {
+    if (addUser===null){
+      window.location.href="http://localhost:8080/zero/signUp?signUp=signUp";
+    }
+    if (addUser===1){
+      var phone = $("input[name='username']").val();
+      var number = $("input[name='pnum']").val();
+      var re = new RegExp(/^[a-zA-Z0-9]{6,8}$/);   // ^表示开始  $表示结束
+      if (!/^1\d{10}$/.test(phone)){
+        alert("请输入正确手机号！");
+        return;
+      }
+      if (!re.test(number)){
+        alert("请输入正确验证码！");
+        return;
+      }
+      $.ajax({
+        type:"post",
+        url:"http://localhost:8080/zero/addUser",
+        data:{"phone":phone,"number":number,"signUp":"signUp"},
+        dataType:"json",
+        success:function (data) {
+          if (data===false){
+            alert("注册失败请检查后再次注册！");
+            return;
+          }
+          if (data===true){
+            alert("注册成功！初始密码为验证码！请尽快修改密码");
+            window.location.href="http://localhost:8080/zero/login";
+          }
+        }
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

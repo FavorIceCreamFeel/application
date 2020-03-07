@@ -1,0 +1,83 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>个人信息</title>
+	<meta name="renderer" content="webkit">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta name="apple-mobile-web-app-capable" content="yes">	
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" th:href="@{/static/css/main.css}">
+	<script type="text/javascript" src="/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+	<link rel="stylesheet" type="text/css" href="../../static/common/layui/css/layui.css" media="all" th:href="@{/common/layui/css/layui.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/bootstrap/css/bootstrap.css" media="all" th:href="@{/common/bootstrap/css/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/global.css" media="all"th:href="@{/common/global.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/css/personal.css" media="all" th:href="@{/css/personal.css}">
+</head>
+<body>
+<div class="site-nav-bg">
+	<div class="site-nav w1200">
+		<p class="sn-back-home">
+			<i class="layui-icon layui-icon-home"></i>
+			<a href="http://localhost:8080/zero/index">首页</a>
+		</p>
+		<div class="sn-quick-menu">
+			<div class="login"><a th:href="${session.userName}?'http://localhost:8080/user/show_User':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${session.userName}?${session.userName}:'登录'">登录</a></div>
+			<div class="sp-cart"><a href="/order/shows">购物车</a></div>
+			<div class="sp-cart" style="margin-left: 20px"><a href="http://localhost:8080/logout">退出</a></div>
+		</div>
+	</div>
+</div>
+
+
+<section class="layui-larry-box" style="bottom: 0;margin-left: 7%;">
+	<div class="larry-personal">
+		<header class="larry-personal-tit">
+			<span>修改密码</span>
+		</header><!-- /header -->
+		<div class="larry-personal-body clearfix changepwd">
+			<form class="layui-form col-lg-4" method="post" action="/user/update_UserPwd">
+			 	<div class="layui-form-item">
+					<label class="layui-form-label">用户名</label>
+					<div class="layui-input-block">  
+					  	<input type="text" name="userName"  autocomplete="off"  class="layui-input" th:value="${userName}" disabled="disabled" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">旧密码</label>
+					<div class="layui-input-block">  
+					  	<input type="password" name="passwordOld"  autocomplete="off"  class="layui-input" value="" placeholder="请输入旧密码">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">新密码</label>
+					<div class="layui-input-block">  
+					  	<input type="password" name="passwordOne"  autocomplete="off"  class="layui-input" value="" placeholder="请输入新密码">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">确认密码</label>
+					<div class="layui-input-block">  
+					  	<input type="password" name="passwordTwo"  autocomplete="off"  class="layui-input" value="" placeholder="请输入确认新密码">
+					</div>
+				</div>
+				<div class="layui-form-item change-submit">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="../../static/common/layui/layui.js" th:src="@{/common/layui/layui.js}"></script>
+<script type="text/javascript">
+	layui.use(['form','upload'],function(){
+         var form = layui.form();
+	});
+</script>
+</body>
+</html>

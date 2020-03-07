@@ -1,0 +1,242 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>我的购物车</title>
+  <link rel="stylesheet" type="text/css" href="../static/static/css/main.css" th:href="@{/static/css/main.css}">
+  <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+  <script type="text/javascript" src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+
+<div class="site-nav-bg">
+  <div class="site-nav w1200">
+    <p class="sn-back-home">
+      <i class="layui-icon layui-icon-home"></i>
+      <a href="http://localhost:8080/zero/index">首页</a>
+    </p>
+    <div class="sn-quick-menu">
+      <div class="login"><a th:href="${not #strings.isEmpty(userName)}?'http://localhost:8080/user/show_User':'http://localhost:8080/zero/login?signUp=signUp'" th:text="${session.userName}?${session.userName}:'登录'">登录</a></div>
+      <div class="sp-cart"><a>购物车</a></div>
+      <div class="sp-cart" style="margin-left: 20px"><a href="http://localhost:8080/logout">退出</a></div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+<!--        <h1 class="mallLogo">-->
+<!--          <a href="#" title="院创网">-->
+<!--            <img src="../res/static/img/logo.png">-->
+<!--          </a>-->
+<!--        </h1>-->
+        <div class="mallSearch">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content content-nav-base shopcart-content">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="#" class="active">我的购物车</a>
+<!--            <a href="buytoday.html">今日团购</a>-->
+<!--            <a href="information.html">母婴资讯</a>-->
+<!--            <a href="about.html">关于我们</a>-->
+          </div>
+        </div>
+      </div>
+    </div>
+<!--    广告-->
+<!--    <div class="banner-bg w1200">-->
+<!--      <h3>夏季清仓</h3>-->
+<!--      <p>宝宝被子、宝宝衣服3折起</p>-->
+<!--    </div>-->
+    <div class="cart w1200">
+      <div class="cart-table-th">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <input class="check-all check" onclick="swapCheck()" id="allCheckked" type="checkbox" value="true">
+            </div>
+          <label>&nbsp;&nbsp;全选</label>
+          </div>
+        </div>
+        <div class="th th-item">
+          <div class="th-inner">
+            商品
+          </div>
+        </div>
+        <div class="th th-price">
+          <div class="th-inner">
+            数量
+          </div>
+        </div>
+        <div class="th th-amount">
+          <div class="th-inner">
+            单价
+          </div>
+        </div>
+        <!--<div class="th th-sum">-->
+          <!--<div class="th-inner">-->
+            <!--小计-->
+          <!--</div>-->
+        <!--</div>-->
+        <div class="th th-op">
+          <div class="th-inner">
+            操作
+          </div>
+        </div>  
+      </div>
+        <form action="/order/orderApply" method="post">
+      <div class="OrderList">
+        <div class="order-content" id="list-cont">
+
+          <ul class="item-content layui-clear" th:each="Map:${ordersGoodsHashMap}">
+            <li class="th th-chk">
+              <div class="select-all">
+                <div class="cart-checkbox">
+                  <!--1--选择框-->
+                  <input class="CheckBoxShop check" id="ok" type="checkbox" num="all" name="OrderId" th:value="${Map.key.getOrderId()}">
+                </div>
+              </div>
+            </li>
+            <li class="th th-item">
+              <div class="item-cont">
+                <!--2--商品图片-->
+                <a href="javascript:;"><img th:src="${Map.value.getGoodsUrl()}" th:alt="${Map.value.getGoodsName()}" style="width: 60%;height: 60%"></a>
+
+              </div>
+            </li>
+
+            <li class="th th-price">
+              <!--数量-->
+              <span class="th-su" ></td></span>
+            </li>
+            <li class="th th-amount">
+              <div class="box-btn layui-clear">
+                <!--<div class="less layui-btn">-</div>-->
+                <input class="Quantity-input" type="" name="" th:value="${Map.key.getGoodsNum()}" disabled="disabled">
+                <!--<div class="add layui-btn">+</div>-->
+              </div>
+            </li>
+            <li class="th th-sum">
+              <!--单价-->
+              <span class="sum" th:text="${Map.key.getGoodsMoney()}"></span>
+            </li>
+            <li class="th th-op">
+              <span th:onclick="'javascript:delOrder('+${Map.key.getOrderId()}+')'" class="dele-btn">删除</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="FloatBarHolder layui-clear">
+        <div class="th th-chk">
+          <div class="select-all">
+            <div class="cart-checkbox">
+              <!--<input class="check-all check" id="" name="select-all" type="checkbox"  value="true">-->
+            </div>
+            <!--<label>&nbsp;&nbsp;已选<span id="num" class="Selected-pieces">0</span>件</label>-->
+            <label>&nbsp;&nbsp;<span id="num" class="Selected-pieces"></span></label>
+          </div>
+        </div>
+        <div class="th batch-deletion">
+          <!--<span class="batch-dele-btn">批量删除</span>-->
+          <span class="batch-dele-btn"></span>
+        </div>
+        <div class="th Settlement">
+          <button class="layui-btn">结算</button>
+        </div>
+        <div class="th total">
+          <p>应付：<span class="pieces-total">0</span></p>
+        </div>
+      </div>
+        </form>
+    </div>
+  </div>
+<script type="text/javascript" src="../static/js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript">
+  //checkbox 全选/取消全选
+  var isCheckAll = false;
+  function swapCheck() {
+    if (isCheckAll) {
+      $("input[type='checkbox']").each(function() {
+        this.checked = false;
+      });
+      isCheckAll = false;
+    } else {
+      $("input[type='checkbox']").each(function() {
+        this.checked = true;
+      });
+      isCheckAll = true;
+    }
+/*        var num=0;
+        $("input[type='checkbox']").each(function() {
+        var prop = this.prop('checked');
+        if (prop==true){
+            num=num+1;
+        }
+        });
+    $("#num").html(num);*/
+  }
+  //   删除订单
+  function delOrder(orderId) {
+    var boo=confirm("确认删除该订单");
+    if (boo){
+      $.ajax({
+        type:"post",
+        url:"http://localhost:8080/order/delOrder",
+        data:{"OrderId":orderId},
+        dataType:"json",//返回的
+        success:function(data) {
+          if(data===true){
+            alert("删除成功！");
+            window.location.href="http://localhost:8080/order/shows";
+          }else{
+            alert("删除失败！");
+          }
+        },
+        error:function(msg) {
+          console.log(msg);
+        }
+      });
+    }
+  }
+</script>
+<script type="text/javascript">
+  layui.config({
+    base:  '../../static/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+  }).use(['mm','jquery','element','car'],function(){
+    var mm = layui.mm,$ = layui.$,element = layui.element,car = layui.car;
+    
+    // 模版导入数据
+    // var html = demo.innerHTML,
+    // listCont = document.getElementById('list-cont');
+    // mm.request({
+    //   url: '../json/shopcart.json',
+    //   success : function(res){
+    //     listCont.innerHTML = mm.renderHtml(html,res)
+    //     element.render();
+    //     car.init()
+    //   },
+    //   error: function(res){
+    //     console.log(res);
+    //   }
+    // })
+    // 
+    car.init()
+
+
+});
+</script>
+</body>
+</html>

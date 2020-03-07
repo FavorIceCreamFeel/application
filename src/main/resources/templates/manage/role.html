@@ -1,0 +1,126 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>角色权限</title>
+	<meta name="renderer" content="webkit">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta name="apple-mobile-web-app-capable" content="yes">	
+	<meta name="format-detection" content="telephone=no">
+
+
+	<link rel="stylesheet" type="text/css" href="../../static/common/layui/css/layui.css" media="all" th:href="@{/common/layui/css/layui.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/bootstrap/css/bootstrap.css" media="all" th:href="@{/common/bootstrap/css/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/global.css" media="all" th:href="@{/common/global.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/css/personal.css" media="all" th:href="@{/css/personal.css}">
+</head>
+<body>
+<div th:include="manage/index"></div>
+<!--layui-larry-box 调节列表的宽度-->
+<section class="layui-larry-box" style="bottom: 0;margin-left: 212px;">
+	<div class="larry-personal">
+	    <div class="layui-tab">
+            <blockquote class="layui-elem-quote news_search">
+				<div class="layui-inline" th:if="${Role}==1">
+					<a href="http://localhost:8080/role/showInsertRole" class="layui-btn audit_btn">创建角色</a>
+				</div>
+			</blockquote>
+            
+		         <!-- 操作日志 -->
+                <div class="layui-form news_list">
+                    <table class="layui-table">
+					    <colgroup>
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+
+
+							<th><span th:text="${roles}"></span>ID</th>
+							<th><span th:text="${roles}"></span>名字</th>
+							<th><span th:text="${roles}"></span>描述</th>
+							<th><span th:text="${roles}"></span><span th:text="${roles}=='角色'?'状态':'字段'"></span></th>
+							<th th:if="${Role}==1">操作</th>
+						</tr>
+					</thead>
+					<tbody class="news_content" th:if="${Role}==1">
+						<tr th:each="role : ${roleList}">
+							<td th:text="${role.getRoleId()}">1</td>
+							<td th:text="${role.getRoleName()}">root</td>
+							<td th:text="${role.getRoleDescribe()}">管理账号</td>
+							<td th:text="${role.getRoleStatus()}==1?'启用':'禁用'">启用</td>
+							<td>
+								<a th:onclick="'javascript:updateRoleStatus('+${role.getRoleStatus()}+','+${role.getRoleId()}+')'" class="layui-btn layui-btn-normal layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>编辑角色状态</a>
+								<a th:onclick="'javascript:showPower('+${role.getRoleId()}+')'" class="layui-btn layui-btn-danger layui-btn-mini"><i class="iconfont icon-edit"></i>查看权限字段</a>
+							</td>
+						</tr>
+					</tbody>
+					<tbody class="news_content" th:if="${Power}==1">
+						<tr th:each="power : ${powerList}">
+							<td th:text="${power.getPowerId()}">1</td>
+							<td th:text="${power.getPowerName()}">root</td>
+							<td th:text="${power.getPowerDescribe()}">管理账号</td>
+							<td th:text="${power.getPowerSign()}">启用</td>
+						</tr>
+					</tbody>
+					</table>
+					<div class="larry-table-page clearfix" th:if="${Role}==1">
+						<div id="page" class="page">
+							<a class="allpage"><b th:text="'共 '+ ${PageInfo.total}+ ' 条/'"></b></a>
+							<a class="allpage"><b th:text="'共 '+ ${PageInfo.pages}+ ' 页'"></b></a>&nbsp;&nbsp;
+							<a th:onclick="'javascript:pageInfo('+${PageInfo.prePage}+')'" th:if="${PageInfo.hasPreviousPage} == true">上一页</a>
+							<a th:each="i : ${PageInfo.navigatepageNums}" th:onclick="'javascript:pageInfo('+${i}+')'" ><span class="layui-laypage-curr layui-laypage-em" th:text="${i}"></span>&nbsp;&nbsp;</a>&nbsp;&nbsp;
+							<a th:onclick="'javascript:pageInfo('+${PageInfo.nextPage}+')'"  th:if="${PageInfo.hasNextPage} == true">下一页</a>
+						</div>
+					</div>
+			    </div>
+		    </div>
+		</div>
+	
+</section>
+<script type="text/javascript">
+	/*查看权限字段函数*/
+	function showPower(PowerId) {
+		if (PowerId!==null){
+			window.location.href="http://localhost:8080/role/showPower?roleId="+PowerId;
+		}
+	}
+	/*状态修改函数*/
+	function updateRoleStatus(roleStatus,roleId) {
+		if (roleStatus===1){
+			var boo = confirm("确定修改状态为：禁用");
+			if (boo){
+			window.location.href="http://localhost:8080/role/updateRoleStatus?roleStatus=0&roleId="+roleId;
+			}
+		}
+		if (roleStatus===0){
+			var bo = confirm("确定修改状态为：启用");
+			if (bo){
+				window.location.href="http://localhost:8080/role/updateRoleStatus?roleStatus=1&roleId="+roleId;
+			}
+		}
+	}
+	<!--分页-->
+	function pageInfo(pageNumber) {
+		window.location.href="http://localhost:8080/role/showRole?pageNumber="+pageNumber;
+		// window.location.href="http://localhost:8080/accueil/showUserList?pageSize="+pageSize+"&pageNumber="+pageNumber;
+	}
+</script>
+<script type="text/javascript">
+	layui.use(['jquery','layer','element','laypage'],function(){
+	      window.jQuery = window.$ = layui.jquery;
+	      window.layer = layui.layer;
+          var element = layui.element(),
+              laypage = layui.laypage;
+    });
+</script>
+</body>
+</html>

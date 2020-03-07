@@ -1,0 +1,181 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>分类</title>
+	<meta name="renderer" content="webkit">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+	<meta name="apple-mobile-web-app-capable" content="yes">	
+	<meta name="format-detection" content="telephone=no">
+
+
+	<link rel="stylesheet" type="text/css" href="../../static/common/layui/css/layui.css" media="all" th:href="@{/common/layui/css/layui.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/bootstrap/css/bootstrap.css" media="all" th:href="@{/common/bootstrap/css/bootstrap.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/common/global.css" media="all" th:href="@{/common/global.css}">
+	<link rel="stylesheet" type="text/css" href="../../static/css/personal.css" media="all" th:href="@{/css/personal.css}">
+</head>
+<body>
+<div th:include="manage/index"></div>
+<!--layui-larry-box 调节列表的宽度-->
+<section class="layui-larry-box" style="bottom: 0;margin-left: 212px;">
+	<div class="larry-personal">
+	    <div class="layui-tab">
+            <blockquote class="layui-elem-quote news_search">
+				<div class="layui-inline" th:if="${oneTypes}==1">
+					<a th:onclick="'javascript:addTypes()'" class="layui-btn audit_btn">创建一级分类</a>
+				</div>
+				<div class="layui-inline" th:if="${twoTypes}==1">
+					<a href="http://localhost:8080/accueil/InsertTwoGoodsTypes" class="layui-btn audit_btn">创建二级分类</a>
+				</div>
+			</blockquote>
+            
+		         <!-- 操作日志 -->
+                <div class="layui-form news_list">
+                    <table class="layui-table">
+					    <colgroup>
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+
+							<th><span th:text="${text}"></span>ID</th>
+							<th><span th:text="${text}"></span>名字</th>
+							<th th:if="${twoTypes}==1">一级分类ID</th>
+							<th><span th:text="${text}"></span>创建时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody class="news_content" th:if="${oneTypes}==1">
+						<tr th:each="type : ${types}">
+							<td th:text="${type.getTypeId()}"></td>
+							<td th:text="${type.getTypeName()}"></td>
+							<td th:text="${type.getTypeCreateTime()}"></td>
+							<td>
+								<a th:onclick="'javascript:delTypes('+${type.getTypeId()}+')'" class="layui-btn layui-btn-normal layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>删除该分类</a>
+								<!--<a th:onclick="'javascript:addTypes()'" class="layui-btn layui-btn-danger layui-btn-mini"><i class="iconfont icon-edit"></i>创建一级分类</a>-->
+							</td>
+						</tr>
+					</tbody>
+					<tbody class="news_content" th:if="${twoTypes}==1">
+						<tr th:each="goodsType : ${goodsTypes}">
+							<td th:text="${goodsType.getGoodsTypeId()}"></td>
+							<td th:text="${goodsType.getGoodsTypeName()}"></td>
+							<td th:text="${goodsType.getTypeId()}"></td>
+							<td th:text="${goodsType.getGoodsTypeTime()}">启用</td>
+							<td>
+								<a th:onclick="'javascript:delGoodsTypes('+${goodsType.getGoodsTypeId()}+')'" class="layui-btn layui-btn-normal layui-btn-mini news_edit"><i class="iconfont icon-edit"></i>删除该分类</a>
+								<!--<a th:onclick="'javascript:showPower('+${role.getRoleId()}+')'" class="layui-btn layui-btn-danger layui-btn-mini"><i class="iconfont icon-edit"></i>查看权限字段</a>-->
+							</td>
+						</tr>
+					</tbody>
+					</table>
+					<!--<div class="larry-table-page clearfix" th:if="${Role}==1">-->
+						<!--<div id="page" class="page">-->
+							<!--<a class="allpage"><b th:text="'共 '+ ${PageInfo.total}+ ' 条/'"></b></a>-->
+							<!--<a class="allpage"><b th:text="'共 '+ ${PageInfo.pages}+ ' 页'"></b></a>&nbsp;&nbsp;-->
+							<!--<a th:onclick="'javascript:pageInfo('+${PageInfo.prePage}+')'" th:if="${PageInfo.hasPreviousPage} == true">上一页</a>-->
+							<!--<a th:each="i : ${PageInfo.navigatepageNums}" th:onclick="'javascript:pageInfo('+${i}+')'" ><span class="layui-laypage-curr layui-laypage-em" th:text="${i}"></span>&nbsp;&nbsp;</a>&nbsp;&nbsp;-->
+							<!--<a th:onclick="'javascript:pageInfo('+${PageInfo.nextPage}+')'"  th:if="${PageInfo.hasNextPage} == true">下一页</a>-->
+						<!--</div>-->
+					</div>
+			    </div>
+		    </div>
+		</div>
+	
+</section>
+<script type="text/javascript">
+
+	<!--分页-->
+	function pageInfo(pageNumber) {
+		window.location.href="http://localhost:8080/accueil/showRole?pageNumber="+pageNumber;
+		// window.location.href="http://localhost:8080/accueil/showUserList?pageSize="+pageSize+"&pageNumber="+pageNumber;
+	}
+	//   删除一级分类
+	function delTypes(typeId) {
+		var boo=confirm("确认删除该分类");
+		if (boo){
+			$.ajax({
+				type:"post",
+				url:"http://localhost:8080/accueil/deleteOneGoodsTypes",
+				data:{"typeId":typeId},
+				dataType:"json",//返回的
+				success:function(data) {
+					if(data===true){
+						alert("删除成功！");
+						window.location.href="http://localhost:8080/accueil/one_GoodsTypes";
+					}else{
+						alert("删除失败！");
+					}
+				},
+				error:function(msg) {
+					console.log(msg);
+				}
+			});
+		}
+	}
+	//   删除二级分类
+	function delGoodsTypes(goodsTypeId) {
+		var boo=confirm("确认删除该分类");
+		if (boo){
+			$.ajax({
+				type:"post",
+				url:"http://localhost:8080/accueil/deleteTwoGoodsTypes",
+				data:{"goodsTypeId":goodsTypeId},
+				dataType:"json",//返回的
+				success:function(data) {
+					if(data===true){
+						alert("删除成功！");
+						window.location.href="http://localhost:8080/accueil/two_GoodsTypes";
+					}else{
+						alert("删除失败！");
+					}
+				},
+				error:function(msg) {
+					console.log(msg);
+				}
+			});
+		}
+	}
+	// 创建一级分类
+	function addTypes() {
+		var s = prompt("请输入一级分类名字");
+		if (null == s|| s===""){
+			return alert("名字不能为空！");
+		};
+		$.ajax({
+			type:"post",
+			url:"http://localhost:8080/accueil/InsertOneGoodsTypes",
+			data:{"typeName":s},
+			dataType:"json",//返回的
+			success:function(data) {
+				if(data===true){
+					alert("创建成功！");
+					window.location.href="http://localhost:8080/accueil/one_GoodsTypes";
+				}else{
+					alert("创建失败！");
+				}
+			},
+			error:function(msg) {
+				console.log(msg);
+			}
+		});
+	}
+</script>
+<script type="text/javascript">
+	layui.use(['jquery','layer','element','laypage'],function(){
+	      window.jQuery = window.$ = layui.jquery;
+	      window.layer = layui.layer;
+          var element = layui.element(),
+              laypage = layui.laypage;
+    });
+</script>
+</body>
+</html>
