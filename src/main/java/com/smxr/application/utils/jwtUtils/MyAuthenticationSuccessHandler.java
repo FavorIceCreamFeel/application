@@ -38,7 +38,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         //生成jwt
         String token =  JwtConfigUtils.createJwtToken();
         httpServletResponse.addHeader("Authorization", "Bearer " + token);
-        httpServletResponse.getWriter().write("{\"result\":\"true\"}");
+        httpServletResponse.getWriter().write("{\"result\":\"true\"，\"Token\":"+token+"}");
         httpServletResponse.getWriter().flush();
         httpServletResponse.getWriter().close();
     }

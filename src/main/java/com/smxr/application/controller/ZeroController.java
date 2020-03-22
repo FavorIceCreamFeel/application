@@ -32,6 +32,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/zero")
+@ResponseBody
 public class ZeroController {
     private static Logger logger=LoggerFactory.getLogger(ZeroController.class);
     @Autowired
@@ -49,13 +50,17 @@ public class ZeroController {
      * @return
      */
     @RequestMapping("/index")
-    public String indexPage(HttpServletRequest request,Model model){
+    @ResponseBody
+    public List indexPage(HttpServletRequest request,Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.getPrincipal() instanceof UserDetails){
             String name = authentication.getName();
             User user = userServer.queryUserByPhoneNumber(name);
-            if (user==null)
-                return "index";
+            if (user==null){
+                ArrayList arrayList = new ArrayList();
+                arrayList.add(new Hashtable<>().put("result", "user is not null !"));
+                return arrayList;
+            }
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
                 if (authority.toString().equals("Role1")){
@@ -83,7 +88,7 @@ public class ZeroController {
         List<Goods> goods = goodsServer.selectGoodsByType(i);
         model.addAttribute("goodsList",goods);
         logger.info("商品填充完成");
-        return "index";
+        return goods;
     }
     @RequestMapping("/login")
     public String signInPage(@RequestParam(required = false,value = "signUp",defaultValue = "null")String signUp){
