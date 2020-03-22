@@ -3,6 +3,7 @@ package com.smxr.application.utils.jwtUtils;
 import lombok.extern.java.Log;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -29,17 +30,14 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         log.info("登录成功");
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setCharacterEncoding("UTF-8");
-        //从authentication中获取用户信息
-        final User userDetail = (User) authentication.getPrincipal();
-        String name = authentication.getName();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        log.info(authorities.toString());
-        log.info(authentication.getDetails().toString());
-        log.info(authentication.getCredentials().toString());
-        log.info(authentication.getPrincipal().toString());
+        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication1.getAuthorities().toString());
+        System.out.println(authentication1.getPrincipal().toString());
+        System.out.println(authentication1.getDetails().toString());
+
         //生成jwt
-        String token =  JwtConfigUtils.createJwtToken(userDetail.getUsername());
-        httpServletResponse.addHeader("token", "Bearer " + token);
+        String token =  JwtConfigUtils.createJwtToken();
+        httpServletResponse.addHeader("Authorization", "Bearer " + token);
         httpServletResponse.getWriter().write("{\"result\":\"true\"}");
         httpServletResponse.getWriter().flush();
         httpServletResponse.getWriter().close();

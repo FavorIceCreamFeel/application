@@ -24,6 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user")
+@ResponseBody
 public class UserController {
     private static Logger logger= LoggerFactory.getLogger(ZeroController.class);
     @Autowired

@@ -29,6 +29,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/order")
+@ResponseBody
 public class OrdersController {
     private static Logger logger= LoggerFactory.getLogger(OrdersController.class);
     @Autowired

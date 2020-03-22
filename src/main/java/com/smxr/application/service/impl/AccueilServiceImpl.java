@@ -67,4 +67,5 @@ public class AccueilServiceImpl implements
         List<User> userAllList = userDao.findUserAll();
         return new PageInfo<User>(userAllList);
     }
+
 }

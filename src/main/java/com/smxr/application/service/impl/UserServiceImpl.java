@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         logger.info("用户权限集："+stringBuilder.toString());
-        return new org.springframework.security.core.userdetails.User(user.getPhoneNumber()+"", user.getUserPwd(), AuthorityUtils.commaSeparatedStringToAuthorityList(stringBuilder.toString()));
+        return new org.springframework.security.core.userdetails.User(user.getPhoneNumber()+"", user.getUserPwd(),true,true,true,true, AuthorityUtils.commaSeparatedStringToAuthorityList(stringBuilder.toString()));
     }
 
     /**

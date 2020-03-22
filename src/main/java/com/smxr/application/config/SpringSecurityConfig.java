@@ -5,6 +5,7 @@ import com.smxr.application.utils.jwtUtils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import java.security.SecureRandom;
@@ -86,9 +88,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/zero/login").invalidateHttpSession(true).deleteCookies("JESSIONID")
 //                .logout().logoutUrl("/logout").logoutSuccessUrl("/zero/login").invalidateHttpSession(true).deleteCookies("JESSIONID")
                 .and()
-//                记住用户，不过好像没啥用了
-                .rememberMe().rememberMeParameter("remember")
-                .and()
+//                记住用户
+//                .rememberMe().rememberMeParameter("remember")
+//                .and()
 //                处理异常和权限不足的接口实现
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler).authenticationEntryPoint(myAuthenticationException)
 //                .exceptionHandling().accessDeniedPage("/zero/err")
@@ -103,6 +105,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .invalidSessionUrl("/zero/index");//session失效后跳转
 //                .maximumSessions(1).maxSessionsPreventsLogin(true);
+        http.addFilterBefore(myJwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 

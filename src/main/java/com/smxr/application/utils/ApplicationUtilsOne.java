@@ -22,5 +22,13 @@ public class ApplicationUtilsOne {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(new Date());
     }
-
+    /**
+     * 获取格式化时间
+     * parse Date
+     * @return
+     */
+    public static String getDateTime(Date date){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(date);
+    }
 }

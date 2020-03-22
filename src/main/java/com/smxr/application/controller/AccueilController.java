@@ -33,6 +33,7 @@ import java.util.List;
 @Log
 @Controller
 @RequestMapping("/accueil")
+@ResponseBody
 public class AccueilController {
     @Autowired
     private GoodsService goodsService;
@@ -262,5 +263,10 @@ public class AccueilController {
     @ResponseBody
     public boolean updateOrdersStatus(@RequestParam Integer orderId){
         return orderService.updateOrdersStatus(orderId);
+    }
+    @ResponseBody
+    @RequestMapping("/test1")
+    public String test(){
+        return "1234567678";
     }
 }
