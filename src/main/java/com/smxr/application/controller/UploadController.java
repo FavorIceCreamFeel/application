@@ -46,7 +46,8 @@ public class UploadController {
         String replace = UUID.randomUUID().toString().replace("-", "");
         String fileName=replace+suffixName;//新文件名
 //        String realPath = request.getSession().getServletContext().getRealPath("/upload/");
-        String realPath="E://upload//";
+//        String realPath="E://upload//";   //windows下
+        String realPath="/usr/local/upload/" //liunx 下
 //        target/classes/static
         log.info("上传文件名:"+fileName+"---上传文件路径:"+realPath);
         File realFile =  new File(realPath,fileName);
