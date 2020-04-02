@@ -26,3 +26,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 }
 
+        /**
+         * //WINDOWS用
+         * 	registry.addResourceHandler("/img/**").addResourceLocations("file:E:/upload/");
+         * //LINUX用
+         *  registry.addResourceHandler("/img/**").addResourceLocations("file:/usr/local/upload/");
+         */
